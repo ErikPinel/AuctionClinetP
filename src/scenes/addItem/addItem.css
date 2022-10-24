@@ -1,0 +1,52 @@
+.inputs-container{
+  
+  
+   background-color: rgb(227, 227, 227);
+    
+}
+.add-page-container{
+    text-align: center;
+   
+}
+.add-inputs{
+    margin: 5vw !important;
+    
+}
+
+.file-input{
+    width: 10vw;
+    transform: translateX(2vw);
+
+}
+.file-visted{
+    color: black;
+}
+.no-visit{
+    color: transparent;
+}
+
+
+.title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.input-span{
+    margin: 2vw;
+}
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr) 0.5fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    
+    .div1 { grid-area: 1 / 2 / 2 / 5; }
+    .div2 { grid-area: 1 / 5 / 2 / 8; }
+    .div3 { grid-area: 2 / 5 / 3 / 8; }
+    .div4 { grid-area: 2 / 2 / 3 / 5; }
+    .div5 { grid-area: 3 / 4 / 4 / 6; }

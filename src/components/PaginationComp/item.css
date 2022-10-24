@@ -1,0 +1,103 @@
+
+.list-items-container
+{
+   border-color: gray;
+   border-style: solid;
+   border-width: 1px;
+   border-top: none;
+   border-bottom: none;
+   width: 72vw !important;
+   margin-left:5vw;
+}
+.nav-btn{margin: 2vw;
+color: black;
+}
+.time-container{
+    display: flex;
+}
+.item-container{
+    width: 65vw;
+    height: 35vh;
+    margin-top: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    
+     
+}
+.item-description{
+    margin: 1vw;
+}
+.item-img{
+    margin: 1vh
+}
+.currentBid{
+    margin-top: 5vh;
+    margin-bottom: 2vh
+}
+.item-time{
+margin-top: 15vh;
+margin-left: 10vw !important;
+width: auto;
+font-size: 1.3vw;
+}
+.bid-button{
+    margin-top: 2vh; 
+}
+hr{
+    width: 95%;
+}
+
+.item-page-container{
+    display: flex;
+}
+
+.side-section-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5vw;
+    margin-top: 15vh;
+}
+
+.category-btn{
+    margin: 1vw;
+    font-size: 1.2vw !important;
+}
+
+
+.left-contant{
+    width: 15vw;
+}
+
+.thumbsUp{
+    font-size: 2vw;
+    margin-left: 75%;
+    
+    
+}
+
+.show-votes{
+   margin: 2vw;
+}
+.modal-content{
+    height: auto !important;
+    width: 90vw !important;
+    overflow-y: visible !important;
+}
+
+
+.modal-item-container{
+    margin: 1vw;
+    border-color: gray;
+   border-style: solid;
+   border-width: 1px;
+  
+}
+
+.span-modal{
+    margin: 1vw;
+}
+.modal-bid{
+    margin-left: 1vw;
+}
+
