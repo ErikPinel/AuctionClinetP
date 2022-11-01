@@ -1,6 +1,6 @@
 import REact,{useState,useEffect} from 'react'
 import axios from 'axios';
-import { ItemsBought } from '../../scenes/Items/ItemPrevious/ItemsBought'
+import { ItemsBought } from '../Items/ItemBoughtSoled/ItemsBought'
 import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 
@@ -14,21 +14,43 @@ function DisplayItemBought()
   const[filter,setFilter]=useState();
     
   useEffect(()=>{
-    const fetchPostsCurrent= async()=>{
+    const fetchPostsCurrentBought= async()=>{
         setloading(true);
-        axios.post("http://localhost:5000/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
+        axios.post("http://localhost:5000/api-users/users/getBought",{id:localStorage.getItem("logged")}).then((res) => {
           if(res.data.status=="sucsses")
           {
-        setPosts(res.data.bought);
+            setPosts(res.data.items.reverse());
         setloading(false)
       }
       else alert("items not found")
             
             })
     }
+   
 
 
-    fetchPostsCurrent();
+
+    const fetchPostsCurrentSoled= async()=>{
+      setloading(true);
+      axios.post("http://localhost:5000/api-users/users/getSoled",{id:localStorage.getItem("logged")}).then((res) => {
+        if(res.data.status=="sucsses")
+        {
+      setPosts(res.data.items.reverse());
+      setloading(false)
+    }
+    else alert("items not found")
+          
+          })
+  }
+
+
+  
+  
+if(filter=="itemBought")
+fetchPostsCurrentBought();
+
+else fetchPostsCurrentSoled();
+
 
   },[filter]);
 

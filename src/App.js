@@ -20,10 +20,11 @@ import AddItem from "./scenes/addItem/addItem";
 import DisplayItemMen from "./scenes/DisplayItem/DisplayItemMen";
 import {DisplayItemWomen} from "./scenes/DisplayItem/DisplayItemWomen";
 import DisplayItemKids from "./scenes/DisplayItem/DisplayItemKids";
-import DisplayItemBought from "./scenes/DisplayItem/DisplayItemBought";
 import DisplayItemCurrent from "./scenes/DisplayItem/DisplayItemCurrent";
 import DisplayItemCurrentSell from "./scenes/DisplayItem/DisplayItemCurrentSell";
- 
+import PieSoled from "./scenes/pieSoled"
+import PieSpent from "./scenes/pieSoled copy";
+ import DisplayItemBought from "./scenes/DisplayItem/DisplayItemBought";
 
 
 
@@ -60,14 +61,16 @@ function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
-
+              <Route path="/pieSoled" element={<PieSoled />} />
+              <Route path="/pieSpent" element={<PieSpent />} />
+              
               
               <Route path="/displayMen" element={<DisplayItemMen/>}/> 
               <Route path="/displayWomen" element={<DisplayItemWomen/>}/> 
               <Route path="/displayKids" element={<DisplayItemKids/>}/> 
               <Route path="/displayCurrent" element={<DisplayItemCurrent/>}/> 
               <Route path="/displayCurrentSell" element={<DisplayItemCurrentSell/>}/> 
-              <Route path="/displayItemBought" element={<DisplayItemBought/>}/> 
+              <Route path="/displayItemBoughtAndSoled" element={<DisplayItemBought/>}/> 
             </Routes>
           </main>
         </div>

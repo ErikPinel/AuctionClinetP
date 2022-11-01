@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import "./item.css";
 import emailjs from "@emailjs/browser";
@@ -9,27 +9,44 @@ import { faCoffee, faThumbsUp } from "@fortawesome/fontawesome-free-solid";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Divider } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { ColorModeContext, tokens } from "../../../theme";
+
+
 
 let _ITEM = [];
 let modalPost = null;
+let itemsBought=[];
+let itemsSoled=[];
+
+
 
 function MyVerticallyCenteredModal(state, props) {
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
+
+
+
+
   return (
+    theme.palette.mode === "dark" ?
     <Modal
       {...state}
-      size="xl"
+      size="l"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
+      style={{"color":"white"}}
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {props.title}
+      <Modal.Header closeButton style={{"backgroundColor":`${colors.primary[400]}`}}>
+        <Modal.Title id="contained-modal-title-vcenter" style={{"color":"white"}}>
+          {props.title} 
         </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {state.items}
+      </Modal.Header >
+      <Modal.Body style={{"backgroundColor":`${colors.primary[500]}`}}>
+        {state.items}  
 
         <div>
           {state.post
@@ -54,7 +71,52 @@ function MyVerticallyCenteredModal(state, props) {
             : ""}
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={{"backgroundColor":`${colors.primary[500]}`}}>
+        <Button  onClick={state.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+    
+    :
+      <Modal
+      {...state}
+      size="xl"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      
+    >
+      <Modal.Header closeButton >
+        <Modal.Title id="contained-modal-title-vcenter">
+          {props.title} 
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body >
+        {state.items}  
+
+        <div>
+          {state.post
+            ? state.post.offers.map((e, index) => (
+                <div className="modal-item-container">
+                  {index == 0 ? (
+                    <span className="span-modal">Starting price</span>
+                  ) : index == state.post.offers.length - 1 ? (
+                    <span className="span-modal">
+                      {"bid number : " + index + " - current bid"}
+                    </span>
+                  ) : (
+                    <span className="span-modal">
+                      {"bid number : " + index}
+                    </span>
+                  )}
+                  <div className="modal-bid" key={index}>
+                    {e.currentBid + "$"}{" "}
+                  </div>
+                </div>
+              ))
+            : ""}
+        </div>
+      </Modal.Body>
+      <Modal.Footer >
         <Button onClick={state.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
@@ -67,7 +129,6 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
   const [bid, setBid] = useState();
   const [UserID, setUserID] = useState();
   const [logged, setLogged] = useState(false);
-  const [time, setTime] = useState();
   const [effectIterval, setEffectIterval] = useState(0);
   const [items, setItems] = useState([]);
   const [fullscreen, setFullscreen] = useState(true);
@@ -76,6 +137,13 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
   const [search, setSearch] = useState();
   const [modalShow, setModalShow] = React.useState(false);
   const [indexItem, setIndexItem] = useState(0);
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
+
+
+
 
   function handleShow(breakpoint) {
     setFullscreen(breakpoint);
@@ -91,28 +159,154 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
         if (res.data.status == "logged") setLogged(true);
       });
     }
-    console.log(effectIterval);
+   console.log(window.outerWidth)
+   window.outerWidth<=600?
     setItems(
       posts.map((posts, index) => (
         <>
+    
+          <hr />
+          {
+            (_ITEM = (
+              <div className="" key={posts.id}>
+                <div
+                 
+                  className= ' '
+                >
+
+<h3 className="">{posts.description}</h3>
+
+
+                  <img
+                    className=""
+                    src={posts.image}
+                    
+                 
+                    style={{"width":"200px"}}
+                  
+
+                    onClick={() => {
+                      setIndexItem(index);
+                      setModalShow(true);
+                    }}
+
+
+
+                  />
+
+
+
+<div className=""    style={{"marginTop":"30px"}}>
+                  <h4 className="">
+                    <div>
+                      <span>The auction will end in : </span>
+                    </div>
+                    {handleTime(
+                      posts,
+                      posts.dueDate,
+                      (new Date(posts.dueDate).getTime() -
+                        new Date().getTime()) /
+                        1000 /
+                        60 /
+                        60,
+                      index
+                    )}
+                  </h4>
+                </div>
+
+
+ 
+               
+
+               
+              
+                
+                </div>
+              </div>
+            ))
+
+
+
+            
+          }
+        
+           
+      <div>
+          {posts.upVotes ? (
+            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
+              <div className="bottomVotes">
+             <span>  <FontAwesomeIcon
+                style={{ color: "blue" }}
+                className="thumbsUp"
+                icon={faThumbsUp}
+              /> </span>
+              <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+              </div>
+            ) : (
+              theme.palette.mode === "dark" ? 
+              <div className="bottomVotes">
+              <span>
+              <FontAwesomeIcon
+                onClick={() => handleUpVote(posts)}
+                color={"white"}
+                className="thumbsUp"
+                icon={faThumbsUp}
+              /> </span>
+              <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+              </div>
+              
+              
+              : <FontAwesomeIcon
+              onClick={() => handleUpVote(posts)}
+              color={"black"}
+              className="thumbsUp"
+              icon={faThumbsUp}
+            />
+            )
+          ) : (
+            <FontAwesomeIcon
+              onClick={() => handleUpVote(posts)}
+              color={`${color}`}
+              className="thumbsUp"
+              icon={faThumbsUp}
+            />
+          )}{" "}
+             </div>
+          
+        </>
+      ))
+    )
+    ////
+    :
+    ////
+    setItems(
+      posts.map((posts, index) => (
+        <>
+    
           <hr />
           {
             (_ITEM = (
               <div className="item-container" key={posts.id}>
                 <div
-                  onClick={() => {
-                    setIndexItem(index);
-                    setModalShow(true);
-                  }}
+                 
+                  className= 'sub-container'
+
                 >
                   <img
                     className="item-img"
                     src={posts.image}
-                    width={window.screen.height * 0.3}
-                    height={window.screen.height * 0.35}
+                   
+                    height={window.outerWidth/5}
+                   
+
+                    onClick={() => {
+                      setIndexItem(index);
+                      setModalShow(true);
+    
+                    }}
                   />{" "}
-                </div>
-                <div className="left-contant">
+
+  <div className="left-contant">
                   <h3 className="item-description">{posts.description}</h3>
 
                   <div>
@@ -141,22 +335,37 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
                     <div>
                       {" "}
                       {logged ? (
-                        <Button
+                     theme.palette.mode === "dark" ?     <Button
+                     style={{"backgroundColor":`${colors.primary[400]}`}}
                           className="bid-button"
                           onClick={() => {
                             heandleBid(posts);
-                            window.location.reload(false);
+                            setEffectIterval(effectIterval + 1)
                           }}
                         >
                           {" "}
                           submit bid
                         </Button>
-                      ) : (
+                   : <Button
+                   style={{"backgroundColor":`${colors.primary[100]}`}}
+                     className="bid-button"
+                     onClick={() => {
+                       heandleBid(posts);
+                       setEffectIterval(effectIterval + 1)
+                     }}
+                   >
+                     {" "}
+                     submit bid
+                   </Button>  ) : (
                         ""
                       )}
                     </div>
                   </div>
                 </div>
+               
+
+               
+              
                 <div className="time-container">
                   <h4 className="item-time">
                     <div>
@@ -174,8 +383,13 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
                     )}
                   </h4>
                 </div>
+                </div>
               </div>
             ))
+
+
+
+            
           }
           {posts.upVotes ? (
             posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
@@ -185,12 +399,18 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
                 icon={faThumbsUp}
               />
             ) : (
+              theme.palette.mode === "dark" ? 
               <FontAwesomeIcon
                 onClick={() => handleUpVote(posts)}
-                color={`${color}`}
+                color={"white"}
                 className="thumbsUp"
                 icon={faThumbsUp}
-              />
+              />: <FontAwesomeIcon
+              onClick={() => handleUpVote(posts)}
+              color={"black"}
+              className="thumbsUp"
+              icon={faThumbsUp}
+            />
             )
           ) : (
             <FontAwesomeIcon
@@ -203,9 +423,16 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
           <span className="show-votes">
             {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
           </span>
+          
         </>
       ))
-    );
+    )
+
+
+
+
+
+
 
     setTimeout(function () {
       setEffectIterval(effectIterval + 1);
@@ -221,6 +448,7 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
     if (!votes)
      votes = [];
     votes.push(localStorage.getItem("logged"));
+    console.log("a")
     if (post.section == "Men-section") {
       axios
       .patch(`http://localhost:5000/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
@@ -239,7 +467,6 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
       }
    
   }
-
 
   function findUser(buyerId, sellerID) {
     console.log(buyerId);
@@ -300,11 +527,19 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
             .then((data) => console.log(data));
         }
       } else alert("invalid bid");
+
+
+
+
     }
   }
 
-  function del(i) {
-    axios.delete(`http://localhost:5000/api-itemMen/itemmen/${posts[i]._id}`);
+ async function del(i,post) {
+
+    if (post.section == "Men-section")  {await axios.delete(`http://localhost:5000/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
+      else if (post.section == "Women-section") {await axios.delete(`http://localhost:5000/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+       else if (post.section == "Kids-section") {await axios.delete(`http://localhost:5000/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+    
   }
 
   function handleTime(posts, dueDate1, hours, index) {
@@ -317,8 +552,15 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
 
     let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
     if (hours <= 0 && minutes <= 0 && seconds <= 0) {
-      del(index);
-      sendEmail(posts);
+      const  a= async () =>{
+      await del(index,posts)
+      sendEmail(posts,index)
+      addBoughtSoled(posts,index)
+   
+      
+    }
+      a()
+     
     }
     if (
       Math.floor(
@@ -334,12 +576,15 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
       hours1 = Math.floor(
         (new Date(dueDate1).getTime() - new Date().getTime()) / 1000 / 60 / 60
       );
+     
     if (seconds < 10) seconds = "0" + seconds;
-    if (minutes < 10) return hours1 + ":" + 0 + "" + minutes;
+    if (minutes < 10)minutes= "0" + minutes;
+   
     return hours1 + " hr : " + minutes + " min : " + seconds + " sec";
   }
 
-  async function sendEmail(post) {
+  async function sendEmail(post ,index) {
+    posts.splice(index,1)
     findUser(post.offers[post.offers.length - 1].bidderID, post.SellerID);
     setTimeout(() => {
       console.log(BuyerDataToEmail);
@@ -385,17 +630,41 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
           function (error) {
             console.log("FAILED...", error);
           }
-        );
+        )
     }, 1000);
   }
+
+  async function addBoughtSoled(post, index)
+{
+ 
+
+ await axios
+  .post(`http://localhost:5000/api-users/users/logged/`, {user:localStorage.getItem("logged") })
+  .then((data) => {itemsBought=data.data.user.itemsBought})
+
+ await axios
+  .post(`http://localhost:5000/api-users/users/logged/`, {user:post.SellerID })
+  .then((data) => {itemsSoled=data.data.user.itemsSoled} );
+  
+  itemsBought.push(post)
+  itemsSoled.push(post)
+
+ await axios .patch(`http://localhost:5000/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
+  .then((data) => {})
+
+   await axios .patch(`http://localhost:5000/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
+  .then((data) => {});
+ 
+}
+
 
   function handleInput(e) {
     console.log(e.target.value);
   }
 
   return (
-    <div className="item-page-container">
-      <div className="side-section-container">
+    theme.palette.mode === "dark" ?    <div className="item-page-container"    styles={{"border":"none"}}>
+    
         <MyVerticallyCenteredModal
           show={modalShow}
           onHide={() => setModalShow(false)}
@@ -403,45 +672,43 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
           post={posts[indexItem]}
         />
 
-        <h3> select section</h3>
-        <hr />
-
-        <NavLink className="nav-btn" to="/displayMen">
-          <strong>Mens Section</strong>
-        </NavLink>
-        <NavLink className="nav-btn" to="/displayWomen">
-          <strong>Women Section</strong>
-        </NavLink>
-        <NavLink className="nav-btn" to="/displayKids">
-          <strong>Kids Section</strong>
-        </NavLink>
-
-        <hr />
-        <h4>My current auctions </h4>
-        <NavLink className="nav-btn" to="/displayCurrent">
-          <strong>currently bidding</strong>
-        </NavLink>
-        <NavLink className="nav-btn" to="/displayKids">
-          <strong>currently selling</strong>
-        </NavLink>
-        <hr />
-
-        <h4>previus auctions</h4>
-        <NavLink className="nav-btn" to="/displayKids">
-          <strong>bidding history</strong>
-        </NavLink>
-        <NavLink className="nav-btn" to="/displayKids">
-          <strong>solled items</strong>
-        </NavLink>
-      </div>
-
-      <div className="list-items-container">
+       
+     
         <ul>
-          <h3 className="men-sec"> Current biddings </h3>
+          <h3 className="men-sec"> Men Section</h3>
           {items}
           <hr />
         </ul>
+        
       </div>
-    </div>
+    
+  
+:
+  
+<div className="item-page-container">
+    
+    <MyVerticallyCenteredModal
+      show={modalShow}
+      onHide={() => setModalShow(false)}
+      items={items[indexItem]}
+      post={posts[indexItem]}
+    />
+
+   
+  <div className="list-items-container">
+   
+   
+   
+    <ul>
+      <h3 className="men-sec"> Current Bids</h3>
+      {items}
+      <hr />
+    </ul>
+    
+  </div>
+
+</div>
+
+
   );
-};
+}; 

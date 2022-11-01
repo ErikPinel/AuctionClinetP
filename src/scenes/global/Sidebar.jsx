@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-import { tokens } from "../../theme";
+import { ColorModeContext, tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -20,13 +20,27 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import SellIcon from '@mui/icons-material/Sell';
-
-
+import axios from "axios";
+import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
+import WomanIcon from '@mui/icons-material/Woman';
+import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Logout from "@mui/icons-material/Logout";
 
 
 export const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
+ 
+
+
+
+  
+
 
   return (
     <MenuItem
@@ -48,6 +62,27 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [userObjName,setUserObjName]=useState();
+    
+  useEffect(() => {
+    findUser( localStorage.getItem("logged"))
+    },[])
+
+  
+    function findUser(userID) {
+    
+      axios.get(`http://localhost:5000/api-users/users/${userID}`).then((res) => {
+        let obj = {
+          name: res.data[0].fullName,
+          email: res.data[0].email,
+          phone: res.data[0].phone,
+        };
+        console.log(obj.name)
+        setUserObjName(obj.name)
+  
+      });}
+
+
 
   return (
     <Box
@@ -86,12 +121,11 @@ const Sidebar = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 ml="15px"
+                sx={{display:"flex",justifyContent:"end"}}
               >
-                <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
+               
+                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}    >
+                  <MenuOutlinedIcon  />
                 </IconButton>
               </Box>
             )}
@@ -99,7 +133,7 @@ const Sidebar = () => {
 
           {!isCollapsed && (
             <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center">
+              {/* <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
                   width="100px"
@@ -107,7 +141,7 @@ const Sidebar = () => {
                   src={`../../assets/user.png`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
-              </Box>
+              </Box> */}
               <Box textAlign="center">
                 <Typography
                   variant="h2"
@@ -115,11 +149,9 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ed Roh
+                 {userObjName}
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
-                </Typography>
+               
               </Box>
             </Box>
           )}
@@ -130,7 +162,7 @@ const Sidebar = () => {
         <Item
               title="Men Section"
               to="displayMen"
-              icon={<HomeOutlinedIcon />}
+              icon={<NordicWalkingIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -138,15 +170,14 @@ const Sidebar = () => {
       <Item
               title="Women Section"
               to="displayWomen"
-              icon={<HomeOutlinedIcon />}
+              icon={<WomanIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
 <Item
               title="Kids Section"
               to="displayKids"
-              icon={<HomeOutlinedIcon />}
+              icon={<BedroomBabyIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -154,16 +185,15 @@ const Sidebar = () => {
 <Item
               title="Current bids"
               to="displayCurrent"
-              icon={<HomeOutlinedIcon />}
+              icon={<ShoppingBasketIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-
 <Item
               title="Currently Selling"
               to="displayCurrentSell"
-              icon={<HomeOutlinedIcon />}
+              icon={<StorefrontIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -175,12 +205,12 @@ const Sidebar = () => {
             <Item
               title="Dashboard"
               to="/"
-              icon={<HomeOutlinedIcon />}
+              icon={<DashboardIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            <Typography
+            {/* <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
@@ -207,39 +237,47 @@ const Sidebar = () => {
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Account
             </Typography>
-            <Item
-              title="Register"
-              to="/register"
-              icon={<AppRegistrationIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            
+          { localStorage.getItem("logged")? "":  <Item
+            title="Register"
+            to="/register"
+            icon={<AppRegistrationIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />}
 
-              <Item
+{ localStorage.getItem("logged")? "": <Item
               title="Log in"
               to="/logIn"
               icon={<LoginIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
+          }
             
-            <Item
+            { localStorage.getItem("logged")?    <Item
               title="Post an Item"
               to="/addItem"
               icon={<SellIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> 
+: ""
+        }
+
+
+
+
+
             <Item
               title="FAQ Page"
               to="/faq"
@@ -269,7 +307,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Line Chart"
               to="/line"
               icon={<TimelineOutlinedIcon />}
@@ -282,7 +320,7 @@ const Sidebar = () => {
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
           </Box>
         </Menu>
       </ProSidebar>

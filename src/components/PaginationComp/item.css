@@ -1,13 +1,15 @@
 
 .list-items-container
 {
-   border-color: gray;
+   /* border-color: gray;
    border-style: solid;
-   border-width: 1px;
+   border-width: 1px; */
    border-top: none;
    border-bottom: none;
    width: 72vw !important;
    margin-left:5vw;
+
+text-align: center;
 }
 .nav-btn{margin: 2vw;
 color: black;
@@ -25,11 +27,31 @@ color: black;
     
      
 }
+.voteBot{
+    margin-left: 5vw;
+}
+.bottomVotes{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 2vw;
+   
+}
+.vote-container{
+    right: 5vw;
+}
+
+.sub-container{
+display: flex;
+flex-direction: row;
+
+}
 .item-description{
     margin: 1vw;
 }
 .item-img{
-    margin: 1vh
+    margin: 1vh;
+    width: 25%;
 }
 .currentBid{
     margin-top: 5vh;
@@ -67,6 +89,7 @@ hr{
 
 .left-contant{
     width: 15vw;
+    margin: 2vw;
 }
 
 .thumbsUp{

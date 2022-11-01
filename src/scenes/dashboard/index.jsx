@@ -15,6 +15,16 @@ import ProgressCircle from "../../components/ProgressCircle";
 import PieChart from "../../components/PieChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import PieSoled from "../pieSoled"; 
+import PieChartTotalSold from "../../components/PieChartTotalSold";
+// import PieSpent from "../pieSpent";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SellIcon from '@mui/icons-material/Sell';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+
+
+
+
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -23,6 +33,9 @@ const Dashboard = () => {
   const [totalBids,setTotalBids]=useState()
   const [totalSales,setTotalSales]=useState()
   const [totalBuys,setTotalBuys]=useState()
+  const [postsPieSpent,setPostsPieSpent]=useState([])
+  const [postsPiSoled,setPostsPiSoled]=useState([])
+
 
   useEffect( ()=>{
     const fetchPostsCurrent= async ()=>{
@@ -37,15 +50,16 @@ const Dashboard = () => {
     
                 })
 
-                await  axios.post("http://localhost:5000/api-users/users/Bought",{user:localStorage.getItem("logged")}).then((res) => {
-                  setTotalBuys(res.data.bought?res.data.bought.length:0)
+                await  axios.post("http://localhost:5000/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
+                  setTotalBuys(res.data?res.data.TotalItemsBought:0)
                   console.log(res.data.bought)
+                  setPostsPieSpent(res.data.revanue)
                     })
 
 
-                    await  axios.post("http://localhost:5000/api-users/users/Soled",{user:localStorage.getItem("logged")}).then((res) => {
-                      setTotalSales(res.data.soled?res.data.soled.length:0);
-                   
+                    await  axios.post("http://localhost:5000/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
+                      setTotalSales(res.data?res.data.TotalItemsSoled:0);
+                      setPostsPiSoled(res.data.revanue)
             
                         })
     
@@ -88,6 +102,27 @@ const Dashboard = () => {
         gap="20px"
       >
         {/* ROW 1 */}
+        {window.outerWidth<=600?  
+          <Box
+          gridColumn="span 6"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={totalRevenue+"$"}
+            subtitle="Projected Earnings"
+            progress="0.75"
+            increase="+14%"
+            icon={
+              <AttachMoneyIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        :
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -101,12 +136,37 @@ const Dashboard = () => {
             progress="0.75"
             increase="+14%"
             icon={
-              <EmailIcon
+              <AttachMoneyIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
+        }
+
+
+
+
+
+
+      {window.outerWidth<=600?    <Box
+          gridColumn="span 6"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={totalBids}
+            subtitle="My bidds currently"
+            progress="0.50"
+            icon={
+              <PointOfSaleIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>:
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -125,8 +185,12 @@ const Dashboard = () => {
             }
           />
         </Box>
-        <Box
-          gridColumn="span 3"
+         }
+
+
+
+       {window.outerWidth<=600?  <Box
+          gridColumn="span 6"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -138,12 +202,60 @@ const Dashboard = () => {
             progress="0.30"
             increase="+5%"
             icon={
-              <PersonAddIcon
+              <SellIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
+        :
+        <Box
+        gridColumn="span 3"
+        backgroundColor={colors.primary[400]}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <StatBox
+          title={totalSales}
+          subtitle="Total items solled so far"
+          progress="0.30"
+          increase="+5%"
+          icon={
+            <SellIcon
+              sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+            />
+          }
+        />
+      </Box>
+        
+        
+        }
+
+
+
+
+         {window.outerWidth<=600? <Box
+          gridColumn="span 6"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={totalBuys}
+            subtitle="Total items bought so far"
+            progress="0.80"
+            increase="+43%"
+            icon={
+              <ShoppingCartCheckoutIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>   
+        
+        :
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -157,60 +269,22 @@ const Dashboard = () => {
             progress="0.80"
             increase="+43%"
             icon={
-              <TrafficIcon
+              <ShoppingCartCheckoutIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
-        </Box>
+        </Box>   
+        
+        }
 
         {/* ROW 2 */}
-        <Box
-          gridColumn="span 7"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-
-{"s"}
+   
 
 
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Revenue Generated
-              </Typography>
-              <Typography
-                variant="h3"
-                fontWeight="bold"
-                color={colors.greenAccent[500]}
-              >
-                $59,342.32
-              </Typography>
-            </Box>
-            <Box>
-              <IconButton>
-                <DownloadOutlinedIcon
-                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
-                />
-              </IconButton>
-            </Box>
-          </Box>
-          <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
-          </Box>
-        </Box>
-        <Box
-          gridColumn="span 5"
+
+{window.outerWidth<=600?<Box
+          gridColumn="span 12"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           padding="30px"
@@ -220,13 +294,76 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Projected Earnings By Section ($)
+            Total Earnings By Section ($)
           </Typography>
           <Box height="200px">
-            <PieChart  />
+            < PieChartTotalSold postsPie={postsPiSoled} />
           </Box>
 
 
+        </Box>
+        :
+        <Box
+          gridColumn="span 6"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          padding="30px"
+        >
+          <Typography
+            variant="h5"
+            fontWeight="600"
+            sx={{ marginBottom: "15px" }}
+          >
+            Total Earnings By Section ($)
+          </Typography>
+          <Box height="200px">
+            < PieChartTotalSold postsPie={postsPiSoled} />
+          </Box>
+
+
+        </Box>
+        
+        }
+
+        
+{window.outerWidth<=600? <Box
+          gridColumn="span 12"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          padding="30px"
+        >
+          <Typography
+            variant="h5"
+            fontWeight="600"
+            sx={{ marginBottom: "15px" }}
+          >
+            Total spendings By Section ($)
+          </Typography>
+          <Box height="200px">
+            <PieChartTotalSold  postsPie={postsPieSpent}/>
+          </Box>
+          </Box>
+
+          :
+
+          <Box
+          gridColumn="span 6"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+          padding="30px"
+        >
+          <Typography
+            variant="h5"
+            fontWeight="600"
+            sx={{ marginBottom: "15px" }}
+          >
+            Total spendings By Section ($)
+          </Typography>
+          <Box height="200px">
+            <PieChartTotalSold  postsPie={postsPieSpent}/>
+          </Box>
+          </Box>
+}
         {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
@@ -329,7 +466,7 @@ const Dashboard = () => {
           </Box>
         </Box> */}
       
-        </Box>
+        
       </Box>
     </Box>
   );
