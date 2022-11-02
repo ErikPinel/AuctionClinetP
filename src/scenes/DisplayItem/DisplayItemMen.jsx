@@ -16,7 +16,7 @@ function DisplayItemMen()
   useEffect(()=>{
     const fetchPosts= async()=>{
         setloading(true);
-        axios.get("http://localhost:5000/api-itemMen/itemmen").then((res) => {
+        axios.get("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen").then((res) => {
 
         setPosts(res.data);
         setloading(false)
@@ -28,8 +28,7 @@ function DisplayItemMen()
 
     const fetchPostsLtoH= async()=>{
       setloading(true);
-      console.log("adjsjkdjs")
-      axios.post("http://localhost:5000/api-itemMen/itemmen/lowToHigh").then((res) => {
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/lowToHigh").then((res) => {
 
       setPosts(res.data);
       setloading(false)
@@ -42,7 +41,7 @@ function DisplayItemMen()
 
   const fetchPostsHtoL= async()=>{
     setloading(true);
-    axios.post("http://localhost:5000/api-itemMen/itemmen/highToLow").then((res) => {
+    axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/highToLow").then((res) => {
 
     setPosts(res.data);
     setloading(false)
@@ -55,7 +54,7 @@ function DisplayItemMen()
 
 const fetchPostsUpVote= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemMen/itemmen/upVote").then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/upVote").then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -68,7 +67,7 @@ const fetchPostsUpVote= async()=>{
 
 const fetchPostsSearch= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemMen/itemmen/search",{filter:filter}).then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/search",{filter:filter}).then((res) => {
 
   setPosts(res.data);
   setloading(false)

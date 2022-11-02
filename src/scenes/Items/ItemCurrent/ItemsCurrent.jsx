@@ -79,7 +79,7 @@ function MyVerticallyCenteredModal(state, props) {
     :
       <Modal
       {...state}
-      size="xl"
+      size="l"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
@@ -138,6 +138,9 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [indexItem, setIndexItem] = useState(0);
 
+
+
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -155,24 +158,26 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
       setUserID(
         localStorage.getItem("logged") ? localStorage.getItem("logged") : null
       );
-      axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
+      localStorage.getItem("logged")?  axios.post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged`, { user: UserID }).then((res) => {
         if (res.data.status == "logged") setLogged(true);
-      });
+      }):localStorage.getItem("logged")
     }
-   console.log(window.outerWidth)
    window.outerWidth<=600?
     setItems(
       posts.map((posts, index) => (
         <>
+   
           <hr />
           {
             (_ITEM = (
-              <div className={`${posts.offers[posts.offers.length-1].bidderID==localStorage.getItem("logged") && "green"}`} key={posts.id}>
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "green":"" }`} key={posts.id}> 
                 <div
+                 
                   className= ' '
                 >
-                <h3 className="">{posts.description}</h3>
-          
+
+<h3 className="">{posts.description}</h3>
+
 
                   <img
                     className=""
@@ -183,17 +188,21 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                   
 
                     onClick={() => {
+                      
                       setIndexItem(index);
                       setModalShow(true);
                     }}
 
+
+
                   />
+
 
 
 <div className=""    style={{"marginTop":"30px"}}>
                   <h4 className="">
                     <div>
-                      <span>The auction will end in : </span>
+                      <span>The auction will end in </span>
                     </div>
                     {handleTime(
                       posts,
@@ -253,9 +262,9 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                    style={{"backgroundColor":`${colors.primary[100]}`}}
                      className="bid-button"
                      onClick={() => {
+                      window.location.reload(false)
                        heandleBid(posts);
                        setEffectIterval(effectIterval + 1)
-                       window.location.reload(false)
                      }}
                    >
                      {" "}
@@ -272,53 +281,29 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
               
                 
                 </div>
-              </div>
-            ))
 
 
-
-            
-          }
-        
-           
-      <div>
+                <div className="votesContainerMobile">
           {posts.upVotes ? (
             posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
-              <div className="bottomVotes">
-             <span>  <FontAwesomeIcon
+              <FontAwesomeIcon
                 style={{ color: "blue" }}
                 className="thumbsUp"
                 icon={faThumbsUp}
-              /> </span>
-              <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
-              </div>
-            )
-             : 
-
-            (
+              />
+            ) : (
               theme.palette.mode === "dark" ? 
-              <div className="bottomVotes">
-
-              <span>
               <FontAwesomeIcon
                 onClick={() => handleUpVote(posts)}
                 color={"white"}
                 className="thumbsUp"
                 icon={faThumbsUp}
-              /> </span>
-              <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
-              </div>
-              : 
-              <div className="bottomVotes">
-              <span>
-              <FontAwesomeIcon
+              />: <FontAwesomeIcon
               onClick={() => handleUpVote(posts)}
               color={"black"}
               className="thumbsUp"
               icon={faThumbsUp}
-            /></span>
-            <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
-            </div>
+            />
             )
           ) : (
             <FontAwesomeIcon
@@ -328,7 +313,23 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
               icon={faThumbsUp}
             />
           )}{" "}
-             </div>
+          <span className="show-votes">
+            {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
+          </span>
+        </div>
+
+
+
+              </div>
+            ))
+
+
+
+            
+          }
+        
+           
+    
           
         </>
       ))
@@ -343,7 +344,9 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
           <hr />
           {
             (_ITEM = (
-              <div className="item-container" key={posts.id}>
+
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "item-container green":"item-container" }`} key={posts.id}> 
+
                 <div
                  
                   className= 'sub-container'
@@ -353,8 +356,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                     className="item-img"
                     src={posts.image}
                    
-                    height={window.outerWidth/5}
-                   
+                    height={window.outerWidth/7}
 
                     onClick={() => {
                       setIndexItem(index);
@@ -426,7 +428,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                 <div className="time-container">
                   <h4 className="item-time">
                     <div>
-                      <span>The auction will end in : </span>
+                      <span>The auction will end in  </span>
                     </div>
                     {handleTime(
                       posts,
@@ -441,13 +443,8 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                   </h4>
                 </div>
                 </div>
-              </div>
-            ))
 
-
-
-            
-          }
+                <div className="votesContainer">
           {posts.upVotes ? (
             posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
               <FontAwesomeIcon
@@ -480,6 +477,17 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
           <span className="show-votes">
             {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
           </span>
+        </div>
+
+
+              </div>
+            ))
+
+
+
+            
+          }
+           
           
         </>
       ))
@@ -505,58 +513,49 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
     if (!votes)
      votes = [];
     votes.push(localStorage.getItem("logged"));
-    console.log("a")
     if (post.section == "Men-section") {
       axios
-      .patch(`http://localhost:5000/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
-      .then((data) => console.log(data));
+      .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
     }
       else if (post.section == "Women-section") {
         axios
-        .patch(`http://localhost:5000/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
-        .then((data) => console.log(data));
+        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
       }
       else if (post.section == "Kids-section") {
 
         axios
-        .patch(`http://localhost:5000/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
-        .then((data) => console.log(data));
+        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
       }
    
   }
 
   function findUser(buyerId, sellerID) {
-    console.log(buyerId);
 
-    axios.get(`http://localhost:5000/api-users/users/${buyerId}`).then((res) => {
+    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${buyerId}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
         phone: res.data[0].phone,
       };
       BuyerDataToEmail = obj;
-      console.log(BuyerDataToEmail);
     });
 
-    axios.get(`http://localhost:5000/api-users/users/${sellerID}`).then((res) => {
+    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${sellerID}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
         phone: res.data[0].phone,
       };
       SellerDataToEmail = obj;
-      console.log(SellerDataToEmail.name);
     });
   }
 
   function heandleBid(posts) {
     let updatedOffers = posts.offers;
-    console.log(posts.offers);
     let currentBid = Number(bid);
     const bidderID = localStorage.getItem("logged");
     const obj = { currentBid, bidderID };
     updatedOffers.push(obj);
-    console.log(posts.offers[posts.offers.length - 1] + 5);
     if (posts.sellerID == bidderID) alert("you can not bid on your own item");
     else {
       if (
@@ -566,22 +565,19 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
       ) {
         if (posts.section == "Men-section") {
           axios
-            .patch(`http://localhost:5000/api-itemMen/itemmen/${posts._id}`, {
+            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts._id}`, {
               offers: updatedOffers,
             })
-            .then((data) => console.log(data));
         } else if (posts.section == "Women-section") {
           axios
-            .patch(`http://localhost:5000/api-itemWomen/itemwomen/${posts._id}`, {
+            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts._id}`, {
               offers: updatedOffers,
             })
-            .then((data) => console.log(data));
         } else if (posts.section == "Kids-section") {
           axios
-            .patch(`http://localhost:5000/api-itemKids/itemkids/${posts._id}`, {
+            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts._id}`, {
               offers: updatedOffers,
             })
-            .then((data) => console.log(data));
         }
       } else alert("invalid bid");
 
@@ -593,9 +589,9 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
 
  async function del(i,post) {
 
-    if (post.section == "Men-section")  {await axios.delete(`http://localhost:5000/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
-      else if (post.section == "Women-section") {await axios.delete(`http://localhost:5000/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
-       else if (post.section == "Kids-section") {await axios.delete(`http://localhost:5000/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+    if (post.section == "Men-section")  {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
+      else if (post.section == "Women-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+       else if (post.section == "Kids-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
     
   }
 
@@ -644,8 +640,6 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
     posts.splice(index,1)
     findUser(post.offers[post.offers.length - 1].bidderID, post.SellerID);
     setTimeout(() => {
-      console.log(BuyerDataToEmail);
-      console.log(BuyerDataToEmail.name);
       let template = {
         Buyername: BuyerDataToEmail.name,
         buyerEmail: BuyerDataToEmail.email,
@@ -666,10 +660,8 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
         )
         .then(
           function (response) {
-            console.log("SUCCESS!", response.status, response.text);
           },
           function (error) {
-            console.log("FAILED...", error);
           }
         );
 
@@ -682,10 +674,8 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
         )
         .then(
           function (response) {
-            console.log("SUCCESS!", response.status, response.text);
           },
           function (error) {
-            console.log("FAILED...", error);
           }
         )
     }, 1000);
@@ -696,31 +686,30 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
  
 
  await axios
-  .post(`http://localhost:5000/api-users/users/logged/`, {user:localStorage.getItem("logged") })
+  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:localStorage.getItem("logged") })
   .then((data) => {itemsBought=data.data.user.itemsBought})
 
  await axios
-  .post(`http://localhost:5000/api-users/users/logged/`, {user:post.SellerID })
+  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:post.SellerID })
   .then((data) => {itemsSoled=data.data.user.itemsSoled} );
   
   itemsBought.push(post)
   itemsSoled.push(post)
 
- await axios .patch(`http://localhost:5000/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
+ await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
   .then((data) => {})
 
-   await axios .patch(`http://localhost:5000/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
+   await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
   .then((data) => {});
  
 }
 
 
   function handleInput(e) {
-    console.log(e.target.value);
   }
 
   return (
-    theme.palette.mode === "dark" ?    <div className="item-page-container"    >
+    theme.palette.mode === "dark" ?    <div className="item-page-container"    styles={{"border":"none"}}>
     
         <MyVerticallyCenteredModal
           show={modalShow}
@@ -728,22 +717,24 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
           items={items[indexItem]}
           post={posts[indexItem]}
         />
-<div className="list-items-container">
-      
-     
+
+       
+      <div className="list-items-container"
+      styles={{"border":"none"}}
+      >
+        
         <ul>
-          <h3 className="men-sec"> Men Section</h3>
+          <h3 className="men-sec"> Current Bid </h3>
           {items}
           <hr />
         </ul>
         
       </div>
-      </div>
     
-    
+    </div>
 :
   
-<div className="item-page-container"   >
+<div className="item-page-container">
     
     <MyVerticallyCenteredModal
       show={modalShow}
@@ -755,10 +746,8 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
    
   <div className="list-items-container">
    
-   
-   
     <ul>
-      <h3 className="men-sec"> Current Bids</h3>
+      <h3 className="men-sec"> Current Bid</h3>
       {items}
       <hr />
     </ul>

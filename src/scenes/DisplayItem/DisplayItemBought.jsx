@@ -16,7 +16,7 @@ function DisplayItemBought()
   useEffect(()=>{
     const fetchPostsCurrentBought= async()=>{
         setloading(true);
-        axios.post("http://localhost:5000/api-users/users/getBought",{id:localStorage.getItem("logged")}).then((res) => {
+        axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/getBought",{id:localStorage.getItem("logged")}).then((res) => {
           if(res.data.status=="sucsses")
           {
             setPosts(res.data.items.reverse());
@@ -32,7 +32,7 @@ function DisplayItemBought()
 
     const fetchPostsCurrentSoled= async()=>{
       setloading(true);
-      axios.post("http://localhost:5000/api-users/users/getSoled",{id:localStorage.getItem("logged")}).then((res) => {
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/getSoled",{id:localStorage.getItem("logged")}).then((res) => {
         if(res.data.status=="sucsses")
         {
       setPosts(res.data.items.reverse());

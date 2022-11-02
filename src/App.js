@@ -23,7 +23,7 @@ import DisplayItemKids from "./scenes/DisplayItem/DisplayItemKids";
 import DisplayItemCurrent from "./scenes/DisplayItem/DisplayItemCurrent";
 import DisplayItemCurrentSell from "./scenes/DisplayItem/DisplayItemCurrentSell";
 import PieSoled from "./scenes/pieSoled"
-import PieSpent from "./scenes/pieSoled copy";
+
  import DisplayItemBought from "./scenes/DisplayItem/DisplayItemBought";
 
 
@@ -62,7 +62,7 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
               <Route path="/pieSoled" element={<PieSoled />} />
-              <Route path="/pieSpent" element={<PieSpent />} />
+              {/* <Route path="/pieSpent" element={<PieSpent />} /> */}
               
               
               <Route path="/displayMen" element={<DisplayItemMen/>}/> 

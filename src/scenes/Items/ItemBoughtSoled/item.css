@@ -19,7 +19,7 @@ color: black;
 }
 .item-container{
     width: 65vw;
-    height: 35vh;
+    height: 45vh;
     margin-top: 1vw;
     display: flex;
     flex-wrap: wrap;
@@ -41,13 +41,13 @@ color: black;
     right: 5vw;
 }
 
-.green{
+/* .green{
 
  border-color: green;
    border-style: solid;
    border-width: 1px;
 
-}
+} */
 
 .sub-container{
 display: flex;
@@ -131,10 +131,4 @@ hr{
 .modal-bid{
     margin-left: 1vw;
 }
-
-.modal.show .modal-dialog
-{
-    margin-left: 20%;
-}
-
 

@@ -17,7 +17,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
    
     const fetchPosts= async()=>{
         setloading(true);
-        axios.get("http://localhost:5000/api-itemWomen/itemwomen").then((res) => {
+        axios.get("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen").then((res) => {
 
         setPosts(res.data);
         setloading(false)
@@ -29,8 +29,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
 
     const fetchPostsLtoH= async()=>{
       setloading(true);
-      console.log("adjsjkdjs")
-      axios.post("http://localhost:5000/api-itemWomen/itemwomen/lowToHigh").then((res) => {
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/lowToHigh").then((res) => {
 
       setPosts(res.data);
       setloading(false)
@@ -43,7 +42,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
 
   const fetchPostsHtoL= async()=>{
     setloading(true);
-    axios.post("http://localhost:5000/api-itemWomen/itemwomen/highToLow").then((res) => {
+    axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/highToLow").then((res) => {
 
     setPosts(res.data);
     setloading(false)
@@ -56,7 +55,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 const fetchPostsUpVote= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemWomen/itemwomen/upVote").then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/upVote").then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -69,7 +68,7 @@ const fetchPostsUpVote= async()=>{
 
 const fetchPostsSearch= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemWomen/itemwomen/search",{filter:filter}).then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/search",{filter:filter}).then((res) => {
 
   setPosts(res.data);
   setloading(false)

@@ -29,7 +29,7 @@ import axios from "axios";
       logIn()
   
 
-      Axios.get("http://localhost:5000/api-users/users/",{email,password}).then((res) => {
+      Axios.get("https://violet-kangaroo-suit.cyclic.app/api-users/users/",{email,password}).then((res) => {
        setData(res.data)
   })
   
@@ -39,15 +39,12 @@ import axios from "axios";
 
   
   const logIn = () => {
-    console.log(email+"-"+password)
    
-    Axios.post("http://localhost:5000/api-users/users/login",{email,password}).then((res) => {
-      console.log(res.data)
+    Axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/login",{email,password}).then((res) => {
       if(res.data.status=="logged")
       {
        
         localStorage.setItem("logged", res.data.user._id);
-        console.log(localStorage.getItem("logged"))
        
         
       }

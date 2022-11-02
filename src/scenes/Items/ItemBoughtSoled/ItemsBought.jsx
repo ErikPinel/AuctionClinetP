@@ -34,7 +34,7 @@ function MyVerticallyCenteredModal(state, props) {
     theme.palette.mode === "dark" ?
     <Modal
       {...state}
-      size="xl"
+      size="l"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
@@ -79,7 +79,7 @@ function MyVerticallyCenteredModal(state, props) {
     :
       <Modal
       {...state}
-      size="xl"
+      size="l"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
@@ -138,6 +138,9 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [indexItem, setIndexItem] = useState(0);
 
+
+
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -155,11 +158,126 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
       setUserID(
         localStorage.getItem("logged") ? localStorage.getItem("logged") : null
       );
-      axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
+      axios.post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged`, { user: UserID }).then((res) => {
         if (res.data.status == "logged") setLogged(true);
       });
     }
+
+   window.outerWidth<=600?
+    setItems(
+      posts.map((posts, index) => (
+        <>
+   
+          <hr />
+          {
+            (_ITEM = (
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "":"" }`} key={posts.id}> 
+                <div
+                 
+                  className= ' '
+                >
+
+<h3 className="">{posts.description}</h3>
+
+
+                  <img
+                    className=""
+                    src={posts.image}
+                    
+                 
+                    style={{"width":"200px"}}
+                  
+
+                    onClick={() => {
+                      
+                      setIndexItem(index);
+                      setModalShow(true);
+                    }}
+
+
+
+                  />
+
+
+
+
+
+
+  <div className="">
+                
+                  <div>
+                    <h4 className="currentBid">
+                      current bid :
+                      {posts.offers[posts.offers.length - 1].currentBid
+                        ? posts.offers[posts.offers.length - 1].currentBid + "$"
+                        : 5 + "$"}
+                    </h4>
+                   
+                    
+                  </div>
+                </div>
+               
+
+               
+              
+                
+                </div>
+
+
+                <div className="votesContainerMobile">
+          {posts.upVotes ? (
+            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
+              <FontAwesomeIcon
+                style={{ color: "blue" }}
+                className="thumbsUp"
+                icon={faThumbsUp}
+              />
+            ) : (
+              theme.palette.mode === "dark" ? 
+              <FontAwesomeIcon
+               
+                color={"white"}
+                className="thumbsUp"
+                icon={faThumbsUp}
+              />: <FontAwesomeIcon
+            
+              color={"black"}
+              className="thumbsUp"
+              icon={faThumbsUp}
+            />
+            )
+          ) : (
+            <FontAwesomeIcon
+             
+              color={`${color}`}
+              className="thumbsUp"
+              icon={faThumbsUp}
+            />
+          )}{" "}
+          <span className="show-votes">
+            {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
+          </span>
+        </div>
+
+
+
+              </div>
+            ))
+
+
+
+            
+          }
+        
+           
     
+          
+        </>
+      ))
+    )
+    ////
+    :
+    ////
     setItems(
       posts.map((posts, index) => (
         <>
@@ -167,24 +285,26 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
           <hr />
           {
             (_ITEM = (
-              <div className="item-container" key={posts.id}>
+
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "item-container ":"item-container" }`} key={posts.id}> 
+
                 <div
-                  onClick={() => {
-                    setIndexItem(index);
-                    setModalShow(true);
-                  }}
+                 
                   className= 'sub-container'
+
                 >
-
-
-
                   <img
                     className="item-img"
                     src={posts.image}
-                    
+                   
+                    height={window.outerWidth/7}
+
+                    onClick={() => {
+                      setIndexItem(index);
+                      setModalShow(true);
+    
+                    }}
                   />{" "}
-
-
 
   <div className="left-contant">
                   <h3 className="item-description">{posts.description}</h3>
@@ -196,23 +316,18 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
                         ? posts.offers[posts.offers.length - 1].currentBid + "$"
                         : 5 + "$"}
                     </h4>
+                    </div>
+                   
                     
-                  
                   </div>
                 </div>
                
 
                
               
-               
-                </div>
-              </div>
-            ))
+              
 
-
-
-            
-          }
+                <div className="votesContainer">
           {posts.upVotes ? (
             posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
               <FontAwesomeIcon
@@ -223,12 +338,12 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
             ) : (
               theme.palette.mode === "dark" ? 
               <FontAwesomeIcon
-             
+               
                 color={"white"}
                 className="thumbsUp"
                 icon={faThumbsUp}
               />: <FontAwesomeIcon
-           
+             
               color={"black"}
               className="thumbsUp"
               icon={faThumbsUp}
@@ -236,19 +351,31 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
             )
           ) : (
             <FontAwesomeIcon
-           
+             
               color={`${color}`}
               className="thumbsUp"
               icon={faThumbsUp}
             />
-          )}{" "}
+          )}
           <span className="show-votes">
             {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
           </span>
+        </div>
+
+
+              </div>
+            ))
+
+
+
+            
+          }
+           
           
         </>
       ))
-    );
+    )
+
 
     setTimeout(function () {
       setEffectIterval(effectIterval + 1);
@@ -273,19 +400,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
 
    
   <div className="list-items-container">
-    <Form className="d-flex">
-      <Form.Control
-        type="search"
-        placeholder="Search item"
-        className="me-2"
-        aria-label="Search"
-        onChange={(e) => setSearch(e.target.value)}
-      />
     
-      <Button variant="dark"
-       onClick={() => setFilter(search)}>Search</Button>
-    </Form>
-   
     <span style={{ fontSize: "2vw" }}>
   
      
@@ -308,7 +423,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
       
     </span>
     <ul>
-      <h3 className="men-sec"> Men Section</h3>
+      <h3 className="men-sec"> Previous auctions</h3>
       {items}
       <hr />
     </ul>
@@ -329,18 +444,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
 
    
   <div className="list-items-container">
-    <Form className="d-flex">
-      <Form.Control
-        type="search"
-        placeholder="Search item"
-        className="me-2"
-        aria-label="Search"
-        onChange={(e) => setSearch(e.target.value)}
-      />
     
-      <Button variant="dark"
-       onClick={() => setFilter(search)}>Search</Button>
-    </Form>
    
     <span style={{ fontSize: "2vw" }}>
   
@@ -364,7 +468,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
       
     </span>
     <ul>
-      <h3 className="men-sec">  Auction history</h3>
+      <h3 className="men-sec">  Previous auctions</h3>
       {items}
       <hr />
     </ul>

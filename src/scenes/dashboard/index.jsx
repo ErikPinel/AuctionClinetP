@@ -29,10 +29,10 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [totalRevenue,setTotalRevenue]=useState()
-  const [totalBids,setTotalBids]=useState()
-  const [totalSales,setTotalSales]=useState()
-  const [totalBuys,setTotalBuys]=useState()
+  const [totalRevenue,setTotalRevenue]=useState(0)
+  const [totalBids,setTotalBids]=useState(0)
+  const [totalSales,setTotalSales]=useState(0)
+  const [totalBuys,setTotalBuys]=useState(0)
   const [postsPieSpent,setPostsPieSpent]=useState([])
   const [postsPiSoled,setPostsPiSoled]=useState([])
 
@@ -40,24 +40,23 @@ const Dashboard = () => {
   useEffect( ()=>{
     const fetchPostsCurrent= async ()=>{
        
-        await axios.post("http://localhost:5000/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
+        await axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
           setTotalRevenue(res.data.total);
 
             })
 
-            await  axios.post("http://localhost:5000/api-currentHistory/totalBids",{id:localStorage.getItem("logged")}).then((res) => {
+            await  axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/totalBids",{id:localStorage.getItem("logged")}).then((res) => {
               setTotalBids(res.data.total);
     
                 })
 
-                await  axios.post("http://localhost:5000/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
+                await  axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
                   setTotalBuys(res.data?res.data.TotalItemsBought:0)
-                  console.log(res.data.bought)
                   setPostsPieSpent(res.data.revanue)
                     })
 
 
-                    await  axios.post("http://localhost:5000/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
+                    await  axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
                       setTotalSales(res.data?res.data.TotalItemsSoled:0);
                       setPostsPiSoled(res.data.revanue)
             
@@ -68,7 +67,7 @@ const Dashboard = () => {
 
 
     }
-     fetchPostsCurrent()
+    localStorage.getItem("logged")? fetchPostsCurrent() : localStorage.getItem("logged");
    
   },[])
 

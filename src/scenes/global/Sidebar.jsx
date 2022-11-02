@@ -65,19 +65,18 @@ const Sidebar = () => {
   const [userObjName,setUserObjName]=useState();
     
   useEffect(() => {
-    findUser( localStorage.getItem("logged"))
+    localStorage.getItem("logged")?findUser( localStorage.getItem("logged")):localStorage.getItem("logged")
     },[])
 
   
     function findUser(userID) {
     
-      axios.get(`http://localhost:5000/api-users/users/${userID}`).then((res) => {
+      axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${userID}`).then((res) => {
         let obj = {
           name: res.data[0].fullName,
           email: res.data[0].email,
           phone: res.data[0].phone,
         };
-        console.log(obj.name)
         setUserObjName(obj.name)
   
       });}

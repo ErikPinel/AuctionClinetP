@@ -79,8 +79,7 @@ const postItem = (event) => {
     if(section== "Men-section")
     {
     axios
-      .post("/http://localhost:5000/api-itemMen/itemmen", obj)
-      .then((res) => console.log("post"+res));
+      .post("/https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen", obj)
      
     }
    else if(section=="Women-section")
@@ -88,14 +87,12 @@ const postItem = (event) => {
       
 
     axios
-      .post("/http://localhost:5000/api-itemWomen/itemwomem/", obj)
-      .then((res) => console.log("post"+res));
+      .post("/https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomem/", obj)
     }
   else if(section=="Kids-section")
     {
     axios
-      .post("/http://localhost:5000/api-itemKids/itemkids", obj)
-      .then((res) => console.log("post"+res));
+      .post("/https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids", obj)
     }
     else alert("fill all fields")
 
@@ -106,10 +103,8 @@ const postItem = (event) => {
     const formData=new FormData()
     formData.append('file',image)
     formData.append('upload_preset','hztpszww')
-console.log(image)
     Axios.post("https://api.cloudinary.com/v1_1/djz5ywj1e/image/upload",formData)
     .then((response)=>setImageURL(response.data.secure_url))
-    console.log(image)
   }
 
   const onImageChange = (event) => {
@@ -124,14 +119,13 @@ console.log(image)
   
   function handleTitle(e)
 {
-  console.log(e.target.value.length)
   setTitle(e.target.value)
   setIsTitle(false)
 }
 
 function handleDays(e)
 {
-  console.log(e.target.value.length)
+  
   setDueDate(e.target.value)
   setisAuctionDays(false)
 }
@@ -139,14 +133,14 @@ function handleDays(e)
 
 function handleDescription(e)
 {
-  console.log(e.target.value.length)
+  
   setDescription(e.target.value)
   setIsDescription(false)
 }
 
 function handlePriceInput(e)
 {
-  console.log(isPrice)
+  
   setPrice(e.target.value)
   setIsPrice(false)
 }
@@ -266,16 +260,16 @@ postItem()
 const postItem = (event) => {
   const currentBid=price;
   const bidderID=localStorage.getItem("logged")
-  console.log(image)
+ 
 
-  const myDate = (new Date(new Date().getTime()+(0.0001*24*60*60*1000))).getTime();
+  const myDate = (new Date(new Date().getTime()+(dueDate*24*60*60*1000))).getTime();
   let obj = { title: title, dueDate: myDate,description:description,SellerID:SellerID,offers:[{currentBid:Number(currentBid),bidderID}],image:imageURL,section:section } ;
   
   if(section== "Men-section")
   {
   axios
-    .post("http://localhost:5000/api-itemMen/itemmen", obj)
-    .then((res) => alert(res.data.status));
+    .post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen", obj)
+    .then((res) => alert(res.data.status)).then(window.location.reload(false))
    
   }
  else if(section=="Women-section")
@@ -283,14 +277,14 @@ const postItem = (event) => {
     
 
   axios
-    .post("http://localhost:5000/api-itemWomen/itemwomem/", obj)
-    .then((res) => alert(res.data.status));
+    .post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomem/", obj)
+    .then((res) => alert(res.data.status)).then(window.location.reload(false))
   }
 else if(section=="Kids-section")
   {
   axios
-    .post("http://localhost:5000/api-itemKids/itemkids", obj)
-    .then((res) => alert(res.data.status));
+    .post("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids", obj)
+    .then((res) => alert(res.data.status)).then(window.location.reload(false))
   }
   else alert("fill all fields")
 
@@ -306,10 +300,8 @@ const uploadImage=()=>{
   const formData=new FormData()
   formData.append('file',image)
   formData.append('upload_preset','hztpszww')
-console.log(image)
   Axios.post("https://api.cloudinary.com/v1_1/djz5ywj1e/image/upload",formData)
   .then((response)=>setImageURL(response.data.secure_url))
-  console.log(image)
 }
 
 const onImageChange = (event) => {
@@ -324,14 +316,12 @@ const onImageChange = (event) => {
 
 function handleTitle(e)
 {
-console.log(e.target.value.length)
 setTitle(e.target.value)
 setIsTitle(false)
 }
 
 function handleDays(e)
 {
-console.log(e.target.value.length)
 setDueDate(e.target.value)
 setisAuctionDays(false)
 }
@@ -339,14 +329,12 @@ setisAuctionDays(false)
 
 function handleDescription(e)
 {
-console.log(e.target.value.length)
 setDescription(e.target.value)
 setIsDescription(false)
 }
 
 function handlePriceInput(e)
 {
-console.log(isPrice)
 setPrice(e.target.value)
 setIsPrice(false)
 }

@@ -73,13 +73,10 @@ alert("logged")
 }
 
 const postUser = () => {
-  console.log("email")
-  console.log(email)
   let obj = { email: email, password:password,fullName:fullName,phone:phone} 
-  // Axios
-  // .get("http://localhost:5000/api-users/users/").then(res=>console.log("sdsd"))
+  
   Axios
-    .post("http://localhost:5000/api-users/users/register", obj)
+    .post("https://violet-kangaroo-suit.cyclic.app/api-users/users/register", obj)
     .then((res) => res.data=="email alredy exist"?alert("email alredy exist try to log in insted"+ res.data).then(window.location.reload(false))   : setUseProxies(res.data)).then(window.location.reload(false))
 }
 
@@ -209,7 +206,6 @@ export default Form;
 
 //       axios.get("/api-users/users").then((res) => {
 //       setData(res.data);
-//       console.log(data)
 //           })
   
 

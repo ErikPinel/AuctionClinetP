@@ -16,7 +16,7 @@ function DisplayItemKids()
   useEffect(()=>{
     const fetchPosts= async()=>{
         setloading(true);
-        axios.get("http://localhost:5000/api-itemKids/itemkids").then((res) => {
+        axios.get("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids").then((res) => {
 
         setPosts(res.data);
         setloading(false)
@@ -28,8 +28,8 @@ function DisplayItemKids()
 
     const fetchPostsLtoH= async()=>{
       setloading(true);
-      console.log("adjsjkdjs")
-      axios.post("http://localhost:5000/api-itemKids/itemkids/lowToHigh").then((res) => {
+    
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/lowToHigh").then((res) => {
 
       setPosts(res.data);
       setloading(false)
@@ -42,7 +42,7 @@ function DisplayItemKids()
 
   const fetchPostsHtoL= async()=>{
     setloading(true);
-    axios.post("http://localhost:5000/api-itemKids/itemkids/highToLow").then((res) => {
+    axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/highToLow").then((res) => {
 
     setPosts(res.data);
     setloading(false)
@@ -55,7 +55,7 @@ function DisplayItemKids()
 
 const fetchPostsUpVote= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemKids/itemkids/upVote").then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/upVote").then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -68,7 +68,7 @@ const fetchPostsUpVote= async()=>{
 
 const fetchPostsSearch= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemKids/itemkids/search",{filter:filter}).then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/search",{filter:filter}).then((res) => {
 
   setPosts(res.data);
   setloading(false)
