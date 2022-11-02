@@ -90,7 +90,7 @@ const Topbar = () => {
         </IconButton>
         }
         
-        { localStorage.getItem("logged")?    <IconButton onClick={()=>localStorage.removeItem("logged")} >
+        { localStorage.getItem("logged")?    <IconButton onClick={()=>{localStorage.removeItem("logged");window.location.reload(false)}} >
                   <Logout  />
                 </IconButton>
           

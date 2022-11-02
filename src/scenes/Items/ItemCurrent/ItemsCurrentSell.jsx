@@ -672,13 +672,14 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
           post={posts[indexItem]}
         />
 
-       
+<div className="list-items-container">
      
         <ul>
           <h3 className="men-sec"> Men Section</h3>
           {items}
           <hr />
         </ul>
+        </div>
         
       </div>
     

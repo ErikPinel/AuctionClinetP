@@ -164,18 +164,15 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
     setItems(
       posts.map((posts, index) => (
         <>
-    
           <hr />
           {
             (_ITEM = (
               <div className={`${posts.offers[posts.offers.length-1].bidderID==localStorage.getItem("logged") && "green"}`} key={posts.id}>
                 <div
-                 
                   className= ' '
                 >
-
-<h3 className="">{posts.description}</h3>
-
+                <h3 className="">{posts.description}</h3>
+          
 
                   <img
                     className=""
@@ -190,10 +187,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                       setModalShow(true);
                     }}
 
-
-
                   />
-
 
 
 <div className=""    style={{"marginTop":"30px"}}>
@@ -249,6 +243,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                           onClick={() => {
                             heandleBid(posts);
                             setEffectIterval(effectIterval + 1)
+                            window.location.reload(false)
                           }}
                         >
                         {" "}
@@ -260,6 +255,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                      onClick={() => {
                        heandleBid(posts);
                        setEffectIterval(effectIterval + 1)
+                       window.location.reload(false)
                      }}
                    >
                      {" "}
@@ -296,9 +292,13 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
               /> </span>
               <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
               </div>
-            ) : (
+            )
+             : 
+
+            (
               theme.palette.mode === "dark" ? 
               <div className="bottomVotes">
+
               <span>
               <FontAwesomeIcon
                 onClick={() => handleUpVote(posts)}
@@ -308,14 +308,17 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
               /> </span>
               <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
               </div>
-              
-              
-              : <FontAwesomeIcon
+              : 
+              <div className="bottomVotes">
+              <span>
+              <FontAwesomeIcon
               onClick={() => handleUpVote(posts)}
               color={"black"}
               className="thumbsUp"
               icon={faThumbsUp}
-            />
+            /></span>
+            <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+            </div>
             )
           ) : (
             <FontAwesomeIcon
@@ -717,7 +720,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
   }
 
   return (
-    theme.palette.mode === "dark" ?    <div className="item-page-container"    styles={{"border":"none"}}>
+    theme.palette.mode === "dark" ?    <div className="item-page-container"    >
     
         <MyVerticallyCenteredModal
           show={modalShow}
@@ -725,8 +728,8 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
           items={items[indexItem]}
           post={posts[indexItem]}
         />
-
-       
+<div className="list-items-container">
+      
      
         <ul>
           <h3 className="men-sec"> Men Section</h3>
@@ -735,11 +738,12 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
         </ul>
         
       </div>
+      </div>
     
     
 :
   
-<div className="item-page-container">
+<div className="item-page-container"   >
     
     <MyVerticallyCenteredModal
       show={modalShow}

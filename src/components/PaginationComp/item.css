@@ -19,7 +19,7 @@ color: black;
 }
 .item-container{
     width: 65vw;
-    height: 35vh;
+    height: 45vh;
     margin-top: 1vw;
     display: flex;
     flex-wrap: wrap;
@@ -27,6 +27,15 @@ color: black;
     
      
 }
+
+
+.modal.show .modal-dialog
+{
+    margin-left: 20%;
+}
+
+
+
 .voteBot{
     margin-left: 5vw;
 }

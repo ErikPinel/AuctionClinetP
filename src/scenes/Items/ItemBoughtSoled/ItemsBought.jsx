@@ -364,7 +364,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
       
     </span>
     <ul>
-      <h3 className="men-sec"> Men Section</h3>
+      <h3 className="men-sec">  Auction history</h3>
       {items}
       <hr />
     </ul>

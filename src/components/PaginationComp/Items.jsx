@@ -186,6 +186,7 @@ export const Items = ({ posts, loading, setFilter }) => {
                   
 
                     onClick={() => {
+                      
                       setIndexItem(index);
                       setModalShow(true);
                     }}
@@ -249,6 +250,7 @@ export const Items = ({ posts, loading, setFilter }) => {
                           onClick={() => {
                             heandleBid(posts);
                             setEffectIterval(effectIterval + 1)
+                            window.location.reload(false)
                           }}
                         >
                         {" "}
@@ -258,6 +260,7 @@ export const Items = ({ posts, loading, setFilter }) => {
                    style={{"backgroundColor":`${colors.primary[100]}`}}
                      className="bid-button"
                      onClick={() => {
+                      window.location.reload(false)
                        heandleBid(posts);
                        setEffectIterval(effectIterval + 1)
                      }}
@@ -310,21 +313,31 @@ export const Items = ({ posts, loading, setFilter }) => {
               </div>
               
               
-              : <FontAwesomeIcon
+              :
+              <div className="bottomVotes">
+              <span>
+              <FontAwesomeIcon
               onClick={() => handleUpVote(posts)}
               color={"black"}
               className="thumbsUp"
               icon={faThumbsUp}
-            />
+            /></span>
+            <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+            </div>
             )
           ) : (
+            <div className="bottomVotes">
+              <span>
             <FontAwesomeIcon
               onClick={() => handleUpVote(posts)}
               color={`${color}`}
               className="thumbsUp"
               icon={faThumbsUp}
             />
-          )}{" "}
+            </span>
+            <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+            </div>
+          )}
              </div>
           
         </>
@@ -350,8 +363,7 @@ export const Items = ({ posts, loading, setFilter }) => {
                     className="item-img"
                     src={posts.image}
                    
-                    height={window.outerWidth/5}
-                   
+                    height={window.outerWidth/7}
 
                     onClick={() => {
                       setIndexItem(index);
@@ -766,7 +778,7 @@ export const Items = ({ posts, loading, setFilter }) => {
           </Button>
         </span>
         <ul>
-          <h3 className="men-sec"> Men Section</h3>
+          <h3 className="men-sec"> Auction list</h3>
           {items}
           <hr />
         </ul>

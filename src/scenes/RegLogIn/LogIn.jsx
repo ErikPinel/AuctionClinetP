@@ -48,9 +48,11 @@ import axios from "axios";
        
         localStorage.setItem("logged", res.data.user._id);
         console.log(localStorage.getItem("logged"))
+       
         
       }
   alert(res.data.status)
+  window.location.reload(false)
     });
   }
 
@@ -103,7 +105,7 @@ function sets(email,password)
 
   return (
     <Box m="20px">
-      <Header title="REGISTER" subtitle="Create a New User Profile" />
+      <Header title="LOG IN" />
 
       <Formik
 
@@ -159,8 +161,8 @@ function sets(email,password)
              
             <Box display="flex" justifyContent="space-between"  mt="20px">
             <Box mt=""><Link style={{color:`${colors.grey[100]}`, fontSize:"15px"}} to="/register" > dont have an account yet?</Link></Box>   
-              <Button type="button" color="secondary" variant="contained"  onClick={()=>sets(values.email,values.password)} >
-                Create New User
+              <Button type="button" color="secondary" variant="contained"  onClick={()=>{sets(values.email,values.password)}} >
+                Log in
               </Button>
             </Box>
           </form>

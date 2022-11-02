@@ -80,7 +80,7 @@ const postUser = () => {
   // .get("http://localhost:5000/api-users/users/").then(res=>console.log("sdsd"))
   Axios
     .post("http://localhost:5000/api-users/users/register", obj)
-    .then((res) => res.data=="email alredy exist"?alert("email alredy exist try to log in insted"+ res.data): setUseProxies(res.data))
+    .then((res) => res.data=="email alredy exist"?alert("email alredy exist try to log in insted"+ res.data).then(window.location.reload(false))   : setUseProxies(res.data)).then(window.location.reload(false))
 }
 
 
@@ -174,7 +174,7 @@ const postUser = () => {
             <Box display="flex" justifyContent="space-between" mt="20px">
             <Box mt=""><Link style={{color:"white", fontSize:"20"}} to="/logIn" >have an account alredy?</Link></Box>   
 
-              <Button type="button" color="secondary" variant="contained"  onClick={()=>sets(values.email,values.fullName,values.phone,values.password)} >
+              <Button type="button" color="secondary" variant="contained"  onClick={()=>{sets(values.email,values.fullName,values.phone,values.password)}} >
                 Create New User
               </Button>
             </Box>

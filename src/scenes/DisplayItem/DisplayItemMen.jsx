@@ -90,7 +90,7 @@ fetchPostsLtoH();
 else if(filter=="upVote")
 fetchPostsUpVote();
 
-else if(!filter)
+else if(filter==null)
  fetchPosts();
 
 

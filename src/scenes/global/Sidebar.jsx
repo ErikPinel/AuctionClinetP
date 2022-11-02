@@ -182,22 +182,23 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-<Item
+{ localStorage.getItem("logged")?<Item
               title="Current bids"
               to="displayCurrent"
               icon={<ShoppingBasketIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> :""
+                  }
 
-<Item
+{ localStorage.getItem("logged")?<Item
               title="Currently Selling"
               to="displayCurrentSell"
               icon={<StorefrontIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-
+            />: ""
+                }
 
 
 
