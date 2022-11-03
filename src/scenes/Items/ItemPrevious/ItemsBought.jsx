@@ -125,10 +125,10 @@ function MyVerticallyCenteredModal(state, props) {
 
 let BuyerDataToEmail = null;
 let SellerDataToEmail = null;
-export const ItemsBought = ({ posts, loading, setFilter }) => {
+export const ItemsBought = ({ posts, loading, setFilter,userID }) => {
   const [bid, setBid] = useState();
-  const [UserID, setUserID] = useState();
-  const [logged, setLogged] = useState(false);
+  
+  
   const [effectIterval, setEffectIterval] = useState(0);
   const [items, setItems] = useState([]);
   const [fullscreen, setFullscreen] = useState(true);
@@ -154,14 +154,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
   }
 
   useEffect(() => {
-    if (!logged) {
-      setUserID(
-        localStorage.getItem("logged") ? localStorage.getItem("logged") : null
-      );
-      axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
-        if (res.data.status == "logged") setLogged(true);
-      });
-    }
+    
 
    window.outerWidth<=600?
     setItems(
@@ -171,7 +164,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
           <hr />
           {
             (_ITEM = (
-              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "":"" }`} key={posts.id}> 
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==userID? "":"" }`} key={posts.id}> 
                 <div
                  
                   className= ' '
@@ -226,7 +219,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
 
                 <div className="votesContainerMobile">
           {posts.upVotes ? (
-            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
+            posts.upVotes.some((e) => e == userID) ? (
               <FontAwesomeIcon
                 style={{ color: "blue" }}
                 className="thumbsUp"
@@ -286,7 +279,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
           {
             (_ITEM = (
 
-              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "item-container ":"item-container" }`} key={posts.id}> 
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==userID? "item-container ":"item-container" }`} key={posts.id}> 
 
                 <div
                  
@@ -329,7 +322,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
 
                 <div className="votesContainer">
           {posts.upVotes ? (
-            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
+            posts.upVotes.some((e) => e == userID) ? (
               <FontAwesomeIcon
                 style={{ color: "blue" }}
                 className="thumbsUp"

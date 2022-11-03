@@ -125,10 +125,10 @@ function MyVerticallyCenteredModal(state, props) {
 
 let BuyerDataToEmail = null;
 let SellerDataToEmail = null;
-export const ItemsCurrent = ({ posts, loading, setFilter }) => {
+export const ItemsCurrent = ({ posts, loading, setFilter,userID}) => {
   const [bid, setBid] = useState();
-  const [UserID, setUserID] = useState();
-  const [logged, setLogged] = useState(false);
+
+ 
   const [effectIterval, setEffectIterval] = useState(0);
   const [items, setItems] = useState([]);
   const [fullscreen, setFullscreen] = useState(true);
@@ -154,14 +154,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
   }
 
   useEffect(() => {
-    if (!logged) {
-      setUserID(
-        localStorage.getItem("logged") ? localStorage.getItem("logged") : null
-      );
-      localStorage.getItem("logged")?  axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
-        if (res.data.status == "logged") setLogged(true);
-      }):localStorage.getItem("logged")
-    }
+
 
   
    window.outerWidth<=600?
@@ -172,7 +165,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
           <hr />
           {
             (_ITEM = (
-              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "green":"" }`} key={posts.id}> 
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==userID? "green":"" }`} key={posts.id}> 
                 <div
                  
                   className= ' '
@@ -247,7 +240,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                     </span>
                     <div>
                       {" "}
-                      {logged ? (
+                      {userID ? (
                      theme.palette.mode === "dark" ?     <Button
                      style={{"backgroundColor":`${colors.primary[400]}`}}
                           className="bid-button"
@@ -287,7 +280,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
 
                 <div className="votesContainerMobile">
           {posts.upVotes ? (
-            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
+            posts.upVotes.some((e) => e == userID) ? (
               <FontAwesomeIcon
                 style={{ color: "blue" }}
                 className="thumbsUp"
@@ -348,7 +341,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
           {
             (_ITEM = (
 
-              <div className={`${posts.offers[ posts.offers.length-1].bidderID==UserID? "item-container green":"item-container" }`} key={posts.id}> 
+              <div className={`${posts.offers[ posts.offers.length-1].bidderID==userID? "item-container green":"item-container" }`} key={posts.id}> 
 
                 <div
                  
@@ -396,7 +389,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
                     </span>
                     <div>
                       {" "}
-                      {logged ? (
+                      {userID ? (
                      theme.palette.mode === "dark" ?     <Button
                      style={{"backgroundColor":`${colors.primary[400]}`}}
                           className="bid-button"
@@ -449,7 +442,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
 
                 <div className="votesContainer">
           {posts.upVotes ? (
-            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
+            posts.upVotes.some((e) => e == userID) ? (
               <FontAwesomeIcon
                 style={{ color: "blue" }}
                 className="thumbsUp"
@@ -508,26 +501,26 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
     let votes = post.upVotes;
     if (!votes)
      votes = [];
-    votes.push(localStorage.getItem("logged"));
+    votes.push(userID);
     if (post.section == "Men-section") {
       axios
-      .patch(`http://localhost:5000/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
+      .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
     }
       else if (post.section == "Women-section") {
         axios
-        .patch(`http://localhost:5000/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
+        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
       }
       else if (post.section == "Kids-section") {
 
         axios
-        .patch(`http://localhost:5000/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
+        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
       }
    
   }
 
   function findUser(buyerId, sellerID) {
 
-    axios.get(`http://localhost:5000/api-users/users/${buyerId}`).then((res) => {
+    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${buyerId}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
@@ -536,7 +529,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
       BuyerDataToEmail = obj;
     });
 
-    axios.get(`http://localhost:5000/api-users/users/${sellerID}`).then((res) => {
+    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${sellerID}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
@@ -549,7 +542,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
   function heandleBid(posts) {
     let updatedOffers = posts.offers;
     let currentBid = Number(bid);
-    const bidderID = localStorage.getItem("logged");
+    const bidderID = userID;
     const obj = { currentBid, bidderID };
     updatedOffers.push(obj);
     if (posts.sellerID == bidderID) alert("you can not bid on your own item");
@@ -561,17 +554,17 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
       ) {
         if (posts.section == "Men-section") {
           axios
-            .patch(`http://localhost:5000/api-itemMen/itemmen/${posts._id}`, {
+            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts._id}`, {
               offers: updatedOffers,
             })
         } else if (posts.section == "Women-section") {
           axios
-            .patch(`http://localhost:5000/api-itemWomen/itemwomen/${posts._id}`, {
+            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts._id}`, {
               offers: updatedOffers,
             })
         } else if (posts.section == "Kids-section") {
           axios
-            .patch(`http://localhost:5000/api-itemKids/itemkids/${posts._id}`, {
+            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts._id}`, {
               offers: updatedOffers,
             })
         }
@@ -585,9 +578,9 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
 
  async function del(i,post) {
 
-    if (post.section == "Men-section")  {await axios.delete(`http://localhost:5000/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
-      else if (post.section == "Women-section") {await axios.delete(`http://localhost:5000/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
-       else if (post.section == "Kids-section") {await axios.delete(`http://localhost:5000/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+    if (post.section == "Men-section")  {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
+      else if (post.section == "Women-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+       else if (post.section == "Kids-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
     
   }
 
@@ -682,20 +675,20 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
  
 
  await axios
-  .post(`http://localhost:5000/api-users/users/logged/`, {user:localStorage.getItem("logged") })
+  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:userID })
   .then((data) => {itemsBought=data.data.user.itemsBought})
 
  await axios
-  .post(`http://localhost:5000/api-users/users/logged/`, {user:post.SellerID })
+  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:post.SellerID })
   .then((data) => {itemsSoled=data.data.user.itemsSoled} );
   
   itemsBought.push(post)
   itemsSoled.push(post)
 
- await axios .patch(`http://localhost:5000/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
+ await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addBought/${userID}`, { itemsBought: itemsBought})
   .then((data) => {})
 
-   await axios .patch(`http://localhost:5000/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
+   await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
   .then((data) => {});
  
 }

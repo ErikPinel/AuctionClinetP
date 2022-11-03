@@ -4,7 +4,7 @@ import  {ItemsCurrent} from '../../scenes/Items/ItemCurrent/ItemsCurrent';
 import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 
-function DisplayItemCurrent()
+function DisplayItemCurrent({userID})
 {
   const[posts,setPosts]=useState([]);
   const[loading,setloading]=useState(false);
@@ -19,7 +19,7 @@ function DisplayItemCurrent()
   useEffect(()=>{
     const fetchPostsCurrent= async()=>{
         setloading(true);
-        axios.post("http://localhost:5000/api-currentHistory/currentBid",{id:localStorage.getItem("logged")}).then((res) => {
+        axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/currentBid",{id:userID}).then((res) => {
         
         setPosts(res.data);
         setloading(false)
@@ -56,7 +56,7 @@ function DisplayItemCurrent()
 return(
 
 <div className='display-container-men'>
-<ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
+<ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter} userID={userID}></ItemsCurrent>
 <PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
 
 

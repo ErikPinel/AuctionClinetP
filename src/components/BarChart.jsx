@@ -15,7 +15,7 @@ const BarChart = ({ isDashboard = false }) => {
   useEffect(()=>{
     const fetchPostsCurrent= async ()=>{
        
-        await(  axios.post("http://localhost:5000/api-currentHistory/currentBid/chartEarnings",{id:localStorage.getItem("logged")}).then((res) => 
+        await(  axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/currentBid/chartEarnings",{id:localStorage.getItem("logged")}).then((res) => 
           setPosts(res.data)
 
             ))

@@ -16,29 +16,29 @@ import Logout from "@mui/icons-material/Logout";
 
 
 
-const Topbar = () => {
+const Topbar = ({userID,isNotification,setIsNotification}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const[isNotification,setIsNotification]=useState(false);
-  useEffect(() => {
 
-    localStorage.getItem("logged") ?findUser( localStorage.getItem("logged")): localStorage.getItem("logged");
-    },[])
+  // useEffect(() => {
+
+  //   localStorage.getItem("logged") ?findUser( localStorage.getItem("logged")): localStorage.getItem("logged");
+  //   },[])
 
   
-    async function findUser(userID) {
+  //   async function findUser(userID) {
     
-      await axios.get(`http://localhost:5000/api-users/users/${userID}`).then((res) => {
-        console.log("topbar")
-        let obj = {
-          isSoled: res.data[0].isSoled , 
-          isBought: res.data[0].isBought
-        };
-        if(obj.isSoled&&obj.isBought)
-        setIsNotification(true)
+  //     await axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${userID}`).then((res) => {
+  //       console.log("topbar")
+  //       let obj = {
+  //         isSoled: res.data[0].isSoled , 
+  //         isBought: res.data[0].isBought
+  //       };
+  //       if(obj.isSoled||obj.isBought)
+  //       setIsNotification(true)
   
-      });}
+  //     });}
 
 
 
@@ -46,7 +46,7 @@ const Topbar = () => {
  {
   let userID=localStorage.getItem("logged");
   
-  axios.patch(`http://localhost:5000/api-users/users/removeIsBought/${userID}`).then((res) => {
+  axios.patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/removeIsBought/${userID}`).then((res) => {
    
     setIsNotification(false)
 

@@ -4,7 +4,7 @@ import { Items } from '../../components/PaginationComp/Items';
 import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 
-function DisplayItemMen()
+function DisplayItemMen({userID})
 {
   const[posts,setPosts]=useState([]);
   const[loading,setloading]=useState(false);
@@ -16,7 +16,7 @@ function DisplayItemMen()
   useEffect(()=>{
     const fetchPosts= async()=>{
         setloading(true);
-        axios.get("http://localhost:5000/api-itemMen/itemmen").then((res) => {
+        axios.get("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen").then((res) => {
 
         setPosts(res.data);
         setloading(false)
@@ -28,7 +28,7 @@ function DisplayItemMen()
 
     const fetchPostsLtoH= async()=>{
       setloading(true);
-      axios.post("http://localhost:5000/api-itemMen/itemmen/lowToHigh").then((res) => {
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/lowToHigh").then((res) => {
 
       setPosts(res.data);
       setloading(false)
@@ -41,7 +41,7 @@ function DisplayItemMen()
 
   const fetchPostsHtoL= async()=>{
     setloading(true);
-    axios.post("http://localhost:5000/api-itemMen/itemmen/highToLow").then((res) => {
+    axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/highToLow").then((res) => {
 
     setPosts(res.data);
     setloading(false)
@@ -54,7 +54,7 @@ function DisplayItemMen()
 
 const fetchPostsUpVote= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemMen/itemmen/upVote").then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/upVote").then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -67,7 +67,7 @@ const fetchPostsUpVote= async()=>{
 
 const fetchPostsSearch= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemMen/itemmen/search",{filter:filter}).then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/search",{filter:filter}).then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -110,7 +110,7 @@ return(
 
 <div className='display-container-men'>
 
-<Items posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></Items>
+<Items posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}   userID={userID}></Items>
 <PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
 
 

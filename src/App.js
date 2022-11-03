@@ -40,33 +40,54 @@ const [totalSales,setTotalSales]=useState(0)
 const [totalBuys,setTotalBuys]=useState(0)
 const [postsPieSpent,setPostsPieSpent]=useState([])
 const [postsPiSoled,setPostsPiSoled]=useState([])
-
-
-
+const [userObjName,setUserObjName]=useState();
+const [userID,setUserID]=useState();
+const[isNotification,setIsNotification]=useState(false);
 
 
 useEffect( ()=>{
 
+
+  async function findUser() {
+    
+    await axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${localStorage.getItem("logged")}`).then((res) => {
+       console.log("topbar")
+      let obj = {
+        name: res.data[0].fullName,
+        email: res.data[0].email,
+        phone: res.data[0].phone,
+        isSoled: res.data[0].isSoled , 
+        isBought: res.data[0].isBought
+      };
+      if(obj.isSoled||obj.isBought)
+      setIsNotification(true)
+      setUserObjName(obj.name)
+      setUserID(localStorage.getItem("logged"))
+    });}
+
+    findUser()
+
+
   const fetchPostsCurrent= async ()=>{
      
-      await axios.post("http://localhost:5000/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
+      await axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
         setTotalRevenue(res.data.total);
         console.log(1)
           })
 
-            axios.post("http://localhost:5000/api-currentHistory/totalBids",{id:localStorage.getItem("logged")}).then((res) => {
+            axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/totalBids",{id:localStorage.getItem("logged")}).then((res) => {
             setTotalBids(res.data.total);
             console.log(2)
               })
 
-                axios.post("http://localhost:5000/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
+                axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
                 setTotalBuys(res.data?res.data.TotalItemsBought:0)
                 setPostsPieSpent(res.data.revanue)
                 console.log(3)
                   })
 
 
-                    axios.post("http://localhost:5000/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
+                    axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
                     setTotalSales(res.data?res.data.TotalItemsSoled:0);
                     setPostsPiSoled(res.data.revanue)
                     console.log(4)
@@ -76,12 +97,17 @@ useEffect( ()=>{
   
 
 
-
+                     
 
   }
-  localStorage.getItem("logged")? fetchPostsCurrent() : localStorage.getItem("logged");
+  localStorage.getItem("logged")? fetchPostsCurrent() :setUserID("");
  
 },[])
+
+
+
+
+
 
   return (
   
@@ -89,14 +115,17 @@ useEffect( ()=>{
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar isSidebar={isSidebar} />
+          <Sidebar isSidebar={isSidebar} userID={userID} />
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+            <Topbar setIsSidebar={setIsSidebar} userObjName={userObjName} isNotification={isNotification}  setIsNotification={setIsNotification}/>
             <Routes>
 
 
               <Route path="/" element={<Dashboard     
-            totalRevenue={totalRevenue} totalBids={totalBids} totalSales={totalSales} totalBuys={totalBuys} postsPieSpent={postsPieSpent} postsPiSoled={postsPiSoled}  />} />
+            totalRevenue={totalRevenue} totalBids={totalBids} totalSales={totalSales}
+             totalBuys={totalBuys} postsPieSpent={postsPieSpent} postsPiSoled={postsPiSoled}  userObjName={userObjName}
+             userID ={userID}/>} />
+             
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
@@ -113,12 +142,12 @@ useEffect( ()=>{
               {/* <Route path="/pieSpent" element={<PieSpent />} /> */}
               
               
-              <Route path="/displayMen" element={<DisplayItemMen/>}/> 
-              <Route path="/displayWomen" element={<DisplayItemWomen/>}/> 
-              <Route path="/displayKids" element={<DisplayItemKids/>}/> 
-              <Route path="/displayCurrent" element={<DisplayItemCurrent/>}/> 
-              <Route path="/displayCurrentSell" element={<DisplayItemCurrentSell/>}/> 
-              <Route path="/displayItemBoughtAndSoled" element={<DisplayItemBought/>}/> 
+              <Route path="/displayMen" element={<DisplayItemMen  userID ={userID}/>}/> 
+              <Route path="/displayWomen" element={<DisplayItemWomen userID ={userID}/>}/> 
+              <Route path="/displayKids" element={<DisplayItemKids userID ={userID}/>}/> 
+              <Route path="/displayCurrent" element={<DisplayItemCurrent userID ={userID}/>}/> 
+              <Route path="/displayCurrentSell" element={<DisplayItemCurrentSell userID ={userID}/>}/> 
+              <Route path="/displayItemBoughtAndSoled" element={<DisplayItemBought userID ={userID}/>}/> 
             </Routes>
           </main>
         </div>

@@ -14,7 +14,7 @@ const PieChart = () => {
   useEffect(()=>{
     const fetchPostsCurrent= async ()=>{
        
-      await axios.post("http://localhost:5000/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
+      await axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
           setPostsPie(res.data.arr);
 
             })

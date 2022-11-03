@@ -57,30 +57,30 @@ export const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({userObjName,userID}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const [userObjName,setUserObjName]=useState();
+
     
-  useEffect(() => {
-    localStorage.getItem("logged")?findUser( localStorage.getItem("logged")):localStorage.getItem("logged")
-    },[])
+  // useEffect(() => {
+  //   localStorage.getItem("logged")?findUser( localStorage.getItem("logged")):localStorage.getItem("logged")
+  //   },[])
 
   
-    async function findUser(userID) {
+  //   async function findUser(userID) {
     
-      await axios.get(`http://localhost:5000/api-users/users/${userID}`).then((res) => {
-         console.log("topbar")
-        let obj = {
-          name: res.data[0].fullName,
-          email: res.data[0].email,
-          phone: res.data[0].phone,
-        };
-        setUserObjName(obj.name)
+  //     await axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${userID}`).then((res) => {
+  //        console.log("topbar")
+  //       let obj = {
+  //         name: res.data[0].fullName,
+  //         email: res.data[0].email,
+  //         phone: res.data[0].phone,
+  //       };
+  //       setUserObjName(obj.name)
   
-      });}
+  //     });}
 
 
 
@@ -182,7 +182,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-{ localStorage.getItem("logged")?<Item
+{ userID?<Item
               title="Current bids"
               to="displayCurrent"
               icon={<ShoppingBasketIcon />}
@@ -191,7 +191,7 @@ const Sidebar = () => {
             /> :""
                   }
 
-{ localStorage.getItem("logged")?<Item
+{ userID?<Item
               title="Currently Selling"
               to="displayCurrentSell"
               icon={<StorefrontIcon />}
@@ -248,7 +248,7 @@ const Sidebar = () => {
               Account
             </Typography>
             
-          { localStorage.getItem("logged")? "":  <Item
+          { userID? "":  <Item
             title="Register"
             to="/register"
             icon={<AppRegistrationIcon />}
@@ -256,7 +256,7 @@ const Sidebar = () => {
             setSelected={setSelected}
           />}
 
-{ localStorage.getItem("logged")? "": <Item
+{ userID? "": <Item
               title="Log in"
               to="/logIn"
               icon={<LoginIcon />}
@@ -265,7 +265,7 @@ const Sidebar = () => {
             />
           }
             
-            { localStorage.getItem("logged")?    <Item
+            {userID?    <Item
               title="Post an Item"
               to="/addItem"
               icon={<SellIcon />}

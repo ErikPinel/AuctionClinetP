@@ -12,7 +12,7 @@ const PieSoled = () => {
   useEffect(()=>{
     const fetchPostsCurrent=  ()=>{
        //"status":"sucsses","revanue":totalRevanue(data.itemsBought),"TotalItemsSoled":data.itemsBought.length})
-       axios.post("http://localhost:5000/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
+       axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
         console.log(res.data)
         if( res.data)
         {

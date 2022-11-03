@@ -4,7 +4,7 @@ import { Items } from '../../components/PaginationComp/Items';
 import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 
-  export function DisplayItemWomen()
+  export function DisplayItemWomen({userID})
 {
   const[posts,setPosts]=useState([]);
   const[loading,setloading]=useState(false);
@@ -17,7 +17,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
    
     const fetchPosts= async()=>{
         setloading(true);
-        axios.get("http://localhost:5000/api-itemWomen/itemwomen").then((res) => {
+        axios.get("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen").then((res) => {
 
         setPosts(res.data);
         setloading(false)
@@ -29,7 +29,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
 
     const fetchPostsLtoH= async()=>{
       setloading(true);
-      axios.post("http://localhost:5000/api-itemWomen/itemwomen/lowToHigh").then((res) => {
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/lowToHigh").then((res) => {
 
       setPosts(res.data);
       setloading(false)
@@ -42,7 +42,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
 
   const fetchPostsHtoL= async()=>{
     setloading(true);
-    axios.post("http://localhost:5000/api-itemWomen/itemwomen/highToLow").then((res) => {
+    axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/highToLow").then((res) => {
 
     setPosts(res.data);
     setloading(false)
@@ -55,7 +55,7 @@ import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 const fetchPostsUpVote= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemWomen/itemwomen/upVote").then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/upVote").then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -68,7 +68,7 @@ const fetchPostsUpVote= async()=>{
 
 const fetchPostsSearch= async()=>{
   setloading(true);
-  axios.post("http://localhost:5000/api-itemWomen/itemwomen/search",{filter:filter}).then((res) => {
+  axios.post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/search",{filter:filter}).then((res) => {
 
   setPosts(res.data);
   setloading(false)
@@ -111,7 +111,7 @@ return(
 
 <div className='display-container-men'>
 
-<Items posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></Items>
+<Items posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}   userID={userID}></Items>
 <PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
 
 

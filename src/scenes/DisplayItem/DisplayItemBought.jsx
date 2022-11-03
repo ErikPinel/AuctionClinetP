@@ -1,10 +1,10 @@
 import REact,{useState,useEffect} from 'react'
 import axios from 'axios';
-import { ItemsBought } from '../Items/ItemBoughtSoled/ItemsBought'
+import { ItemsBought } from '../Items/ItemPrevious/ItemsBought'
 import  PaginationPage from '../../components/PaginationComp/Pagination'
 
 
-function DisplayItemBought()
+function DisplayItemBought({userID})
 {
   const[posts,setPosts]=useState([]);
   const[loading,setloading]=useState(false);
@@ -16,7 +16,7 @@ function DisplayItemBought()
   useEffect(()=>{
     const fetchPostsCurrentBought= async()=>{
         setloading(true);
-        axios.post("http://localhost:5000/api-users/users/getBought",{id:localStorage.getItem("logged")}).then((res) => {
+        axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/getBought",{id:userID}).then((res) => {
           if(res.data.status=="sucsses")
           {
             setPosts(res.data.items.reverse());
@@ -32,7 +32,7 @@ function DisplayItemBought()
 
     const fetchPostsCurrentSoled= async()=>{
       setloading(true);
-      axios.post("http://localhost:5000/api-users/users/getSoled",{id:localStorage.getItem("logged")}).then((res) => {
+      axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/getSoled",{id:userID}).then((res) => {
         if(res.data.status=="sucsses")
         {
       setPosts(res.data.items.reverse());
@@ -67,7 +67,7 @@ return(
 
 <div className='display-container-men'>
 
-<ItemsBought posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsBought>
+<ItemsBought posts={currentPost} loading={loading} setFilter={setFilter} filter={filter} userID={userID}></ItemsBought>
 <PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
 
 

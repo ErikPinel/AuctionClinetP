@@ -125,10 +125,10 @@ function MyVerticallyCenteredModal(state, props) {
 
 let BuyerDataToEmail = null;
 let SellerDataToEmail = null;
-export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
+export const ItemsCurrentSell = ({ posts, loading, setFilter,userID }) => {
   const [bid, setBid] = useState();
-  const [UserID, setUserID] = useState();
-  const [logged, setLogged] = useState(false);
+ 
+  
   const [effectIterval, setEffectIterval] = useState(0);
   const [items, setItems] = useState([]);
   const [fullscreen, setFullscreen] = useState(true);
@@ -151,293 +151,291 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
   }
 
   useEffect(() => {
-    if (!logged) {
-      setUserID(
-        localStorage.getItem("logged") ? localStorage.getItem("logged") : null
-      );
-      axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
-        if (res.data.status == "logged") setLogged(true);
-      });
-    }
-   window.outerWidth<=600?
-    setItems(
-      posts.map((posts, index) => (
-        <>
-    
-          <hr />
-          {
-            (_ITEM = (
-              <div className="" key={posts.id}>
-                <div
-                 
-                  className= ' '
-                >
-
-<h3 className="">{posts.description}</h3>
-
-
-                  <img
-                    className=""
-                    src={posts.image}
-                    
-                 
-                    style={{"width":"200px"}}
+   
+   
+   
+  
+    window.outerWidth<=600?
+     setItems(
+       posts.map((posts, index) => (
+         <>
+     
+           <hr />
+           {
+             (_ITEM = (
+               <div className="" key={posts.id}>
+                 <div
                   
-
-                    onClick={() => {
-                      setIndexItem(index);
-                      setModalShow(true);
-                    }}
-
-
-
-                  />
-
-
-
-<div className=""    style={{"marginTop":"30px"}}>
-                  <h4 className="">
-                    <div>
-                      <span>The auction will end in : </span>
-                    </div>
-                    {handleTime(
-                      posts,
-                      posts.dueDate,
-                      (new Date(posts.dueDate).getTime() -
-                        new Date().getTime()) /
-                        1000 /
-                        60 /
-                        60,
-                      index
-                    )}
-                  </h4>
-                </div>
-
-
+                   className= ' '
+                 >
  
-               
-
-               
-              
-                
-                </div>
-              </div>
-            ))
-
-
-
-            
-          }
-        
-           
-      <div>
-          {posts.upVotes ? (
-            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
-              <div className="bottomVotes">
-             <span>  <FontAwesomeIcon
-                style={{ color: "blue" }}
-                className="thumbsUp"
-                icon={faThumbsUp}
-              /> </span>
-              <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
-              </div>
-            ) : (
-              theme.palette.mode === "dark" ? 
-              <div className="bottomVotes">
-              <span>
-              <FontAwesomeIcon
-                onClick={() => handleUpVote(posts)}
-                color={"white"}
-                className="thumbsUp"
-                icon={faThumbsUp}
-              /> </span>
-              <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
-              </div>
-              
-              
-              : <FontAwesomeIcon
-              onClick={() => handleUpVote(posts)}
-              color={"black"}
-              className="thumbsUp"
-              icon={faThumbsUp}
-            />
-            )
-          ) : (
-            <FontAwesomeIcon
-              onClick={() => handleUpVote(posts)}
-              color={`${color}`}
-              className="thumbsUp"
-              icon={faThumbsUp}
-            />
-          )}{" "}
-             </div>
-          
-        </>
-      ))
-    )
-    ////
-    :
-    ////
-    setItems(
-      posts.map((posts, index) => (
-        <>
-    
-          <hr />
-          {
-            (_ITEM = (
-              <div className="item-container" key={posts.id}>
-                <div
-                 
-                  className= 'sub-container'
-
-                >
-                  <img
-                    className="item-img"
-                    src={posts.image}
+ <h3 className="">{posts.description}</h3>
+ 
+ 
+                   <img
+                     className=""
+                     src={posts.image}
+                     
+                  
+                     style={{"width":"200px"}}
                    
-                    height={window.outerWidth/5}
-                   
-
-                    onClick={() => {
-                      setIndexItem(index);
-                      setModalShow(true);
-    
-                    }}
-                  />{" "}
-
-  <div className="left-contant">
-                  <h3 className="item-description">{posts.description}</h3>
-
-                  <div>
-                    <h4 className="currentBid">
-                      current bid :
-                      {posts.offers[posts.offers.length - 1].currentBid
-                        ? posts.offers[posts.offers.length - 1].currentBid + "$"
-                        : 5 + "$"}
-                    </h4>
-                    <span className="bid-input-container">
-                      <input
-                        onChange={(e) => setBid(e.target.value)}
-                        type={"number"}
-                        placeholder={`min bid is: ${
-                          posts.offers[posts.offers.length - 1].currentBid
-                            ? Number(
-                                posts.offers[posts.offers.length - 1].currentBid
-                              ) +
-                              6 +
-                              "$"
-                            : 5
-                        }
-                } $`}
-                      />
-                    </span>
-                    <div>
-                      {" "}
-                      {logged ? (
-                     theme.palette.mode === "dark" ?     <Button
-                     style={{"backgroundColor":`${colors.primary[400]}`}}
-                          className="bid-button"
-                          onClick={() => {
-                            heandleBid(posts);
-                            setEffectIterval(effectIterval + 1)
-                          }}
-                        >
-                          {" "}
-                          submit bid
-                        </Button>
-                   : <Button
-                   style={{"backgroundColor":`${colors.primary[100]}`}}
-                     className="bid-button"
+ 
                      onClick={() => {
-                       heandleBid(posts);
-                       setEffectIterval(effectIterval + 1)
+                       
+                       setIndexItem(index);
+                       setModalShow(true);
                      }}
-                   >
-                     {" "}
-                     submit bid
-                   </Button>  ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-                </div>
+ 
+ 
+ 
+                   />
+ 
+ 
+ 
+ <div className=""    style={{"marginTop":"30px"}}>
+                   <h4 className="">
+                     <div>
+                       <span>The auction will end in  </span>
+                     </div>
+                     {handleTime(
+                       posts,
+                       posts.dueDate,
+                       (new Date(posts.dueDate).getTime() -
+                         new Date().getTime()) /
+                         1000 /
+                         60 /
+                         60,
+                       index
+                     )}
+                   </h4>
+                 </div>
+ 
+ 
+   <div className="">
+                 
+                   <div>
+                     <h4 className="currentBid">
+                       current bid :
+                       {posts.offers[posts.offers.length - 1].currentBid
+                         ? posts.offers[posts.offers.length - 1].currentBid + "$"
+                         : 5 + "$"}
+                     </h4>
+                     <span className="bid-input-container">
+                       <input
+                         onChange={(e) => setBid(e.target.value)}
+                         type={"number"}
+                         placeholder={`min bid is: ${
+                           posts.offers[posts.offers.length - 1].currentBid
+                             ? Number(
+                                 posts.offers[posts.offers.length - 1].currentBid
+                               ) +
+                               6 +
+                               "$"
+                             : 5
+                         }
+                 } $`}
+                       />
+                     </span>
+                   
+                   </div>
+                 </div>
+                
+ 
+                
                
-
-               
-              
-                <div className="time-container">
-                  <h4 className="item-time">
-                    <div>
-                      <span>The auction will end in : </span>
-                    </div>
-                    {handleTime(
-                      posts,
-                      posts.dueDate,
-                      (new Date(posts.dueDate).getTime() -
-                        new Date().getTime()) /
-                        1000 /
-                        60 /
-                        60,
-                      index
-                    )}
-                  </h4>
-                </div>
-                </div>
-              </div>
-            ))
-
-
-
+                 
+                 </div>
+               </div>
+             ))
+ 
+ 
+ 
+             
+           }
+         
             
-          }
-          {posts.upVotes ? (
-            posts.upVotes.some((e) => e == localStorage.getItem("logged")) ? (
-              <FontAwesomeIcon
-                style={{ color: "blue" }}
-                className="thumbsUp"
-                icon={faThumbsUp}
-              />
-            ) : (
-              theme.palette.mode === "dark" ? 
-              <FontAwesomeIcon
-                onClick={() => handleUpVote(posts)}
-                color={"white"}
-                className="thumbsUp"
-                icon={faThumbsUp}
-              />: <FontAwesomeIcon
-              onClick={() => handleUpVote(posts)}
-              color={"black"}
-              className="thumbsUp"
-              icon={faThumbsUp}
-            />
-            )
-          ) : (
-            <FontAwesomeIcon
-              onClick={() => handleUpVote(posts)}
-              color={`${color}`}
-              className="thumbsUp"
-              icon={faThumbsUp}
-            />
-          )}{" "}
-          <span className="show-votes">
-            {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
-          </span>
-          
-        </>
-      ))
-    )
+       <div>
+           {posts.upVotes ? (
+             posts.upVotes.some((e) => e == userID) ? (
+               <div className="bottomVotes">
+              <span>  <FontAwesomeIcon
+                 style={{ color: "blue" }}
+                 className="thumbsUp"
+                 icon={faThumbsUp}
+               /> </span>
+               <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+               </div>
+             ) : (
+               theme.palette.mode === "dark" ? 
+               <div className="bottomVotes">
+               <span>
+               <FontAwesomeIcon
+                 onClick={() => handleUpVote(posts)}
+                 color={"white"}
+                 className="thumbsUp"
+                 icon={faThumbsUp}
+               /> </span>
+               <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+               </div>
+               
+               
+               :
+               <div className="bottomVotes">
+               <span>
+               <FontAwesomeIcon
+               onClick={() => handleUpVote(posts)}
+               color={"black"}
+               className="thumbsUp"
+               icon={faThumbsUp}
+             /></span>
+             <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+             </div>
+             )
+           ) : (
+             <div className="bottomVotes">
+               <span>
+             <FontAwesomeIcon
+               onClick={() => handleUpVote(posts)}
+               color={`${color}`}
+               className="thumbsUp"
+               icon={faThumbsUp}
+             />
+             </span>
+             <span className="voteBot">{posts.upVotes && posts.upVotes.length + " - up votes"}</span>
+             </div>
+           )}
+              </div>
+           
+         </>
+       ))
+     )
+     ////
+     :
+     ////
+     setItems(
+       posts.map((posts, index) => (
+         <>
+     
+           <hr />
+           {
+             (_ITEM = (
+               <div className="item-container" key={posts.id}>
+                 <div
+                  
+                   className= 'sub-container'
+ 
+                 >
+                   <img
+                     className="item-img"
+                     src={posts.image}
+                    
+                     height={window.outerWidth/7}
+ 
+                     onClick={() => {
+                       setIndexItem(index);
+                       setModalShow(true);
+     
+                     }}
+                   />{" "}
+ 
+   <div className="left-contant">
+                   <h3 className="item-description">{posts.description}</h3>
+ 
+                   <div>
+                     <h4 className="currentBid">
+                       current bid :
+                       {posts.offers[posts.offers.length - 1].currentBid
+                         ? posts.offers[posts.offers.length - 1].currentBid + "$"
+                         : 5 + "$"}
+                     </h4>
+                    
+                   </div>
+                 </div>
+                
+ 
+                
+               
+                 <div className="time-container">
+                   <h4 className="item-time">
+                     <div>
+                       <span>The auction will end in  </span>
+                     </div>
+                     {handleTime(
+                       posts,
+                       posts.dueDate,
+                       (new Date(posts.dueDate).getTime() -
+                         new Date().getTime()) /
+                         1000 /
+                         60 /
+                         60,
+                       index
+                     )}
+                   </h4>
+                 </div>
+                 </div>
+               </div>
+             ))
+ 
+ 
+ 
+             
+           }
+           {posts.upVotes ? (
+             posts.upVotes.some((e) => e == userID) ? (
+               <FontAwesomeIcon
+                 style={{ color: "blue" }}
+                 className="thumbsUp"
+                 icon={faThumbsUp}
+               />
+             ) : (
+               theme.palette.mode === "dark" ? 
+               <FontAwesomeIcon
+                 onClick={() => handleUpVote(posts)}
+                 color={"white"}
+                 className="thumbsUp"
+                 icon={faThumbsUp}
+               />: <FontAwesomeIcon
+               onClick={() => handleUpVote(posts)}
+               color={"black"}
+               className="thumbsUp"
+               icon={faThumbsUp}
+             />
+             )
+           ) : (
+             <FontAwesomeIcon
+               onClick={() => handleUpVote(posts)}
+               color={`${color}`}
+               className="thumbsUp"
+               icon={faThumbsUp}
+             />
+           )}{" "}
+           <span className="show-votes">
+             {posts.upVotes ? posts.upVotes.length + " - up votes" : ""}
+           </span>
+           
+         </>
+       ))
+     )
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+     setTimeout(function () {
+       setEffectIterval(effectIterval + 1);
+     }, 1000);
+   }, [effectIterval]);
+ 
 
 
 
 
 
+  //////////////////////////////////////////////////////////////////////////////
 
-
-    setTimeout(function () {
-      setEffectIterval(effectIterval + 1);
-    }, 1000);
-  }, [effectIterval]);
-
+  
   if (loading) {
     return <h2>loading...</h2>;
   }
@@ -446,26 +444,26 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
     let votes = post.upVotes;
     if (!votes)
      votes = [];
-    votes.push(localStorage.getItem("logged"));
+    votes.push(userID);
     if (post.section == "Men-section") {
       axios
-      .patch(`http://localhost:5000/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
+      .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
     }
       else if (post.section == "Women-section") {
         axios
-        .patch(`http://localhost:5000/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
+        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
       }
       else if (post.section == "Kids-section") {
 
         axios
-        .patch(`http://localhost:5000/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
+        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
       }
    
   }
 
   function findUser(buyerId, sellerID) {
 
-    axios.get(`http://localhost:5000/api-users/users/${buyerId}`).then((res) => {
+    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${buyerId}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
@@ -474,7 +472,7 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
       BuyerDataToEmail = obj;
     });
 
-    axios.get(`http://localhost:5000/api-users/users/${sellerID}`).then((res) => {
+    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${sellerID}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
@@ -484,48 +482,13 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
     });
   }
 
-  function heandleBid(posts) {
-    let updatedOffers = posts.offers;
-    let currentBid = Number(bid);
-    const bidderID = localStorage.getItem("logged");
-    const obj = { currentBid, bidderID };
-    updatedOffers.push(obj);
-    if (posts.sellerID == bidderID) alert("you can not bid on your own item");
-    else {
-      if (
-        Number(currentBid) >=
-          Number(posts.offers[posts.offers.length - 2].currentBid) + 5 ||
-        !posts.offers[posts.offers.length - 2]
-      ) {
-        if (posts.section == "Men-section") {
-          axios
-            .patch(`http://localhost:5000/api-itemMen/itemmen/${posts._id}`, {
-              offers: updatedOffers,
-            })
-        } else if (posts.section == "Women-section") {
-          axios
-            .patch(`http://localhost:5000/api-itemWomen/itemwomen/${posts._id}`, {
-              offers: updatedOffers,
-            })
-        } else if (posts.section == "Kids-section") {
-          axios
-            .patch(`http://localhost:5000/api-itemKids/itemkids/${posts._id}`, {
-              offers: updatedOffers,
-            })
-        }
-      } else alert("invalid bid");
-
-
-
-
-    }
-  }
+  
 
  async function del(i,post) {
 
-    if (post.section == "Men-section")  {await axios.delete(`http://localhost:5000/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
-      else if (post.section == "Women-section") {await axios.delete(`http://localhost:5000/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
-       else if (post.section == "Kids-section") {await axios.delete(`http://localhost:5000/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+    if (post.section == "Men-section")  {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
+      else if (post.section == "Women-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+       else if (post.section == "Kids-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
     
   }
 
@@ -620,20 +583,20 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
  
 
  await axios
-  .post(`http://localhost:5000/api-users/users/logged/`, {user:localStorage.getItem("logged") })
+  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:userID })
   .then((data) => {itemsBought=data.data.user.itemsBought})
 
  await axios
-  .post(`http://localhost:5000/api-users/users/logged/`, {user:post.SellerID })
+  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:post.SellerID })
   .then((data) => {itemsSoled=data.data.user.itemsSoled} );
   
   itemsBought.push(post)
   itemsSoled.push(post)
 
- await axios .patch(`http://localhost:5000/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
+ await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addBought/${userID}`, { itemsBought: itemsBought})
   .then((data) => {})
 
-   await axios .patch(`http://localhost:5000/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
+   await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
   .then((data) => {});
  
 }
