@@ -76,7 +76,7 @@ const postUser = () => {
   let obj = { email: email, password:password,fullName:fullName,phone:phone} 
   
   Axios
-    .post("https://violet-kangaroo-suit.cyclic.app/api-users/users/register", obj)
+    .post("http://localhost:5000/api-users/users/register", obj)
     .then((res) => res.data=="email alredy exist"?alert("email alredy exist try to log in insted"+ res.data).then(window.location.reload(false))   : setUseProxies(res.data)).then(window.location.reload(false))
 }
 

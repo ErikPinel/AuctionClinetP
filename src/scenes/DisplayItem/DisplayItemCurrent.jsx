@@ -19,7 +19,7 @@ function DisplayItemCurrent()
   useEffect(()=>{
     const fetchPostsCurrent= async()=>{
         setloading(true);
-        axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/currentBid",{id:localStorage.getItem("logged")}).then((res) => {
+        axios.post("http://localhost:5000/api-currentHistory/currentBid",{id:localStorage.getItem("logged")}).then((res) => {
         
         setPosts(res.data);
         setloading(false)

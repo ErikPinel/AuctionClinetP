@@ -79,7 +79,7 @@ const postItem = (event) => {
     if(section== "Men-section")
     {
     axios
-      .post("/https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen", obj)
+      .post("/http://localhost:5000/api-itemMen/itemmen", obj)
      
     }
    else if(section=="Women-section")
@@ -87,12 +87,12 @@ const postItem = (event) => {
       
 
     axios
-      .post("/https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomem/", obj)
+      .post("/http://localhost:5000/api-itemWomen/itemwomem/", obj)
     }
   else if(section=="Kids-section")
     {
     axios
-      .post("/https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids", obj)
+      .post("/http://localhost:5000/api-itemKids/itemkids", obj)
     }
     else alert("fill all fields")
 
@@ -268,7 +268,7 @@ const postItem = (event) => {
   if(section== "Men-section")
   {
   axios
-    .post("https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen", obj)
+    .post("http://localhost:5000/api-itemMen/itemmen", obj)
     .then((res) => alert(res.data.status)).then(window.location.reload(false))
    
   }
@@ -277,13 +277,13 @@ const postItem = (event) => {
     
 
   axios
-    .post("https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomem/", obj)
+    .post("http://localhost:5000/api-itemWomen/itemwomem/", obj)
     .then((res) => alert(res.data.status)).then(window.location.reload(false))
   }
 else if(section=="Kids-section")
   {
   axios
-    .post("https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids", obj)
+    .post("http://localhost:5000/api-itemKids/itemkids", obj)
     .then((res) => alert(res.data.status)).then(window.location.reload(false))
   }
   else alert("fill all fields")

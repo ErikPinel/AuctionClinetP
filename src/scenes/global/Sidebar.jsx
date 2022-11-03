@@ -69,9 +69,10 @@ const Sidebar = () => {
     },[])
 
   
-    function findUser(userID) {
+    async function findUser(userID) {
     
-      axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${userID}`).then((res) => {
+      await axios.get(`http://localhost:5000/api-users/users/${userID}`).then((res) => {
+         console.log("topbar")
         let obj = {
           name: res.data[0].fullName,
           email: res.data[0].email,

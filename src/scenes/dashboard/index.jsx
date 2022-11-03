@@ -26,50 +26,19 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [totalRevenue,setTotalRevenue]=useState(0)
-  const [totalBids,setTotalBids]=useState(0)
-  const [totalSales,setTotalSales]=useState(0)
-  const [totalBuys,setTotalBuys]=useState(0)
-  const [postsPieSpent,setPostsPieSpent]=useState([])
-  const [postsPiSoled,setPostsPiSoled]=useState([])
-
-
-  useEffect( ()=>{
-    const fetchPostsCurrent= async ()=>{
-       
-        await axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
-          setTotalRevenue(res.data.total);
-
-            })
-
-            await  axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/totalBids",{id:localStorage.getItem("logged")}).then((res) => {
-              setTotalBids(res.data.total);
-    
-                })
-
-                await  axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
-                  setTotalBuys(res.data?res.data.TotalItemsBought:0)
-                  setPostsPieSpent(res.data.revanue)
-                    })
-
-
-                    await  axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
-                      setTotalSales(res.data?res.data.TotalItemsSoled:0);
-                      setPostsPiSoled(res.data.revanue)
-            
-                        })
-    
+  // const [totalRevenue,setTotalRevenue]=useState(0)
+  // const [totalBids,setTotalBids]=useState(0)
+  // const [totalSales,setTotalSales]=useState(0)
+  // const [totalBuys,setTotalBuys]=useState(0)
+  // const [postsPieSpent,setPostsPieSpent]=useState([])
+  // const [postsPiSoled,setPostsPiSoled]=useState([])
 
 
 
-
-    }
-    localStorage.getItem("logged")? fetchPostsCurrent() : localStorage.getItem("logged");
-   
-  },[])
+  
 
   return (
     <Box m="20px">
@@ -110,7 +79,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalRevenue+"$"}
+            title={props.totalRevenue+"$"}
             subtitle="Projected Earnings"
             progress="0.75"
             increase="+14%"
@@ -130,7 +99,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalRevenue+"$"}
+            title={props.totalRevenue+"$"}
             subtitle="Projected Earnings"
             progress="0.75"
             increase="+14%"
@@ -156,7 +125,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalBids}
+            title={props.totalBids}
             subtitle="My bidds currently"
             progress="0.50"
             icon={
@@ -174,7 +143,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalBids}
+            title={props.totalBids}
             subtitle="My bidds currently"
             progress="0.50"
             icon={
@@ -196,7 +165,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalSales}
+            title={props.totalSales}
             subtitle="Total items solled so far"
             progress="0.30"
             increase="+5%"
@@ -216,7 +185,7 @@ const Dashboard = () => {
         justifyContent="center"
       >
         <StatBox
-          title={totalSales}
+          title={props.totalSales}
           subtitle="Total items solled so far"
           progress="0.30"
           increase="+5%"
@@ -242,7 +211,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalBuys}
+            title={props.totalBuys}
             subtitle="Total items bought so far"
             progress="0.80"
             increase="+43%"
@@ -263,7 +232,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={totalBuys}
+            title={props.totalBuys}
             subtitle="Total items bought so far"
             progress="0.80"
             increase="+43%"
@@ -296,7 +265,7 @@ const Dashboard = () => {
             Total Earnings By Section ($)
           </Typography>
           <Box height="200px">
-            < PieChartTotalSold postsPie={postsPiSoled} />
+            < PieChartTotalSold postsPie={props.postsPiSoled} />
           </Box>
 
 
@@ -316,7 +285,7 @@ const Dashboard = () => {
             Total Earnings By Section ($)
           </Typography>
           <Box height="200px">
-            < PieChartTotalSold postsPie={postsPiSoled} />
+            < PieChartTotalSold postsPie={props.postsPiSoled} />
           </Box>
 
 
@@ -339,7 +308,7 @@ const Dashboard = () => {
             Total spendings By Section ($)
           </Typography>
           <Box height="200px">
-            <PieChartTotalSold  postsPie={postsPieSpent}/>
+            <PieChartTotalSold  postsPie={props.postsPieSpent}/>
           </Box>
           </Box>
 
@@ -359,7 +328,7 @@ const Dashboard = () => {
             Total spendings By Section ($)
           </Typography>
           <Box height="200px">
-            <PieChartTotalSold  postsPie={postsPieSpent}/>
+            <PieChartTotalSold  postsPie={props.postsPieSpent}/>
           </Box>
           </Box>
 }

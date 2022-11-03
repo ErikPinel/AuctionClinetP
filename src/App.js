@@ -25,18 +25,63 @@ import DisplayItemCurrentSell from "./scenes/DisplayItem/DisplayItemCurrentSell"
 import PieSoled from "./scenes/pieSoled"
 
  import DisplayItemBought from "./scenes/DisplayItem/DisplayItemBought";
+import axios from "axios";
 
 
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+const [graphData, setGraphData] = useState([])
+
+const [totalRevenue,setTotalRevenue]=useState(0)
+const [totalBids,setTotalBids]=useState(0)
+const [totalSales,setTotalSales]=useState(0)
+const [totalBuys,setTotalBuys]=useState(0)
+const [postsPieSpent,setPostsPieSpent]=useState([])
+const [postsPiSoled,setPostsPiSoled]=useState([])
 
 
-  useEffect( ()=>{
-    
-  },[])
 
+
+
+useEffect( ()=>{
+
+  const fetchPostsCurrent= async ()=>{
+     
+      await axios.post("http://localhost:5000/api-currentHistory/chart",{id:localStorage.getItem("logged")}).then((res) => {
+        setTotalRevenue(res.data.total);
+        console.log(1)
+          })
+
+            axios.post("http://localhost:5000/api-currentHistory/totalBids",{id:localStorage.getItem("logged")}).then((res) => {
+            setTotalBids(res.data.total);
+            console.log(2)
+              })
+
+                axios.post("http://localhost:5000/api-users/users/Bought",{id:localStorage.getItem("logged")}).then((res) => {
+                setTotalBuys(res.data?res.data.TotalItemsBought:0)
+                setPostsPieSpent(res.data.revanue)
+                console.log(3)
+                  })
+
+
+                    axios.post("http://localhost:5000/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
+                    setTotalSales(res.data?res.data.TotalItemsSoled:0);
+                    setPostsPiSoled(res.data.revanue)
+                    console.log(4)
+                    // localStorage.setItem("4",`${res.data?res.data.TotalItemsSoled:0}`)
+                    
+                      })
+  
+
+
+
+
+  }
+  localStorage.getItem("logged")? fetchPostsCurrent() : localStorage.getItem("logged");
+ 
+},[])
 
   return (
   
@@ -48,7 +93,10 @@ function App() {
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+
+
+              <Route path="/" element={<Dashboard     
+            totalRevenue={totalRevenue} totalBids={totalBids} totalSales={totalSales} totalBuys={totalBuys} postsPieSpent={postsPieSpent} postsPiSoled={postsPiSoled}  />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />

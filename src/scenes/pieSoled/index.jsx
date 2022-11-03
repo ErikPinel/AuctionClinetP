@@ -10,9 +10,9 @@ import PieChartTotalSold from "../../components/PieChartTotalSold";
 const PieSoled = () => {
   const [postsPie,setPostsPie]=useState([])
   useEffect(()=>{
-    const fetchPostsCurrent= async ()=>{
+    const fetchPostsCurrent=  ()=>{
        //"status":"sucsses","revanue":totalRevanue(data.itemsBought),"TotalItemsSoled":data.itemsBought.length})
-      await axios.post("https://violet-kangaroo-suit.cyclic.app/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
+       axios.post("http://localhost:5000/api-users/users/Soled",{id:localStorage.getItem("logged")}).then((res) => {
         console.log(res.data)
         if( res.data)
         {

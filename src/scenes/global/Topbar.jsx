@@ -22,13 +22,15 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
   const[isNotification,setIsNotification]=useState(false);
   useEffect(() => {
+
     localStorage.getItem("logged") ?findUser( localStorage.getItem("logged")): localStorage.getItem("logged");
     },[])
 
   
-    function findUser(userID) {
+    async function findUser(userID) {
     
-      axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${userID}`).then((res) => {
+      await axios.get(`http://localhost:5000/api-users/users/${userID}`).then((res) => {
+        console.log("topbar")
         let obj = {
           isSoled: res.data[0].isSoled , 
           isBought: res.data[0].isBought
@@ -44,16 +46,12 @@ const Topbar = () => {
  {
   let userID=localStorage.getItem("logged");
   
-  axios.patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/removeIsBought/${userID}`).then((res) => {
+  axios.patch(`http://localhost:5000/api-users/users/removeIsBought/${userID}`).then((res) => {
    
     setIsNotification(false)
 
   });
-  axios.patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/removeIsSoled/${userID}`).then((res) => {
-   
-    setIsNotification(false)
-
-  });
+ 
 
  }
   

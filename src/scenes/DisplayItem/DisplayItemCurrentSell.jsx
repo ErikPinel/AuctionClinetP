@@ -16,7 +16,7 @@ function DisplayItemCurrentSell()
   useEffect(()=>{
     const fetchPostsCurrent= async()=>{
         setloading(true);
-        axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/currentSell",{id:localStorage.getItem("logged")}).then((res) => {
+        axios.post("http://localhost:5000/api-currentHistory/currentSell",{id:localStorage.getItem("logged")}).then((res) => {
 
         setPosts(res.data);
         setloading(false)

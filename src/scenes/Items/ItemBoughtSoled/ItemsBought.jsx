@@ -158,7 +158,7 @@ export const ItemsBought = ({ posts, loading, setFilter }) => {
       setUserID(
         localStorage.getItem("logged") ? localStorage.getItem("logged") : null
       );
-      axios.post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged`, { user: UserID }).then((res) => {
+      axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
         if (res.data.status == "logged") setLogged(true);
       });
     }

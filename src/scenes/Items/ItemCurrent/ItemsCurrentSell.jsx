@@ -155,7 +155,7 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
       setUserID(
         localStorage.getItem("logged") ? localStorage.getItem("logged") : null
       );
-      axios.post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged`, { user: UserID }).then((res) => {
+      axios.post(`http://localhost:5000/api-users/users/logged`, { user: UserID }).then((res) => {
         if (res.data.status == "logged") setLogged(true);
       });
     }
@@ -449,23 +449,23 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
     votes.push(localStorage.getItem("logged"));
     if (post.section == "Men-section") {
       axios
-      .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
+      .patch(`http://localhost:5000/api-itemMen/itemmen/${post._id}`, { upVotes: votes })
     }
       else if (post.section == "Women-section") {
         axios
-        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
+        .patch(`http://localhost:5000/api-itemWomen/itemwomen/${post._id}`, { upVotes: votes })
       }
       else if (post.section == "Kids-section") {
 
         axios
-        .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
+        .patch(`http://localhost:5000/api-itemKids/itemkids/${post._id}`, { upVotes: votes })
       }
    
   }
 
   function findUser(buyerId, sellerID) {
 
-    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${buyerId}`).then((res) => {
+    axios.get(`http://localhost:5000/api-users/users/${buyerId}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
@@ -474,7 +474,7 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
       BuyerDataToEmail = obj;
     });
 
-    axios.get(`https://violet-kangaroo-suit.cyclic.app/api-users/users/${sellerID}`).then((res) => {
+    axios.get(`http://localhost:5000/api-users/users/${sellerID}`).then((res) => {
       let obj = {
         name: res.data[0].fullName,
         email: res.data[0].email,
@@ -499,17 +499,17 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
       ) {
         if (posts.section == "Men-section") {
           axios
-            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts._id}`, {
+            .patch(`http://localhost:5000/api-itemMen/itemmen/${posts._id}`, {
               offers: updatedOffers,
             })
         } else if (posts.section == "Women-section") {
           axios
-            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts._id}`, {
+            .patch(`http://localhost:5000/api-itemWomen/itemwomen/${posts._id}`, {
               offers: updatedOffers,
             })
         } else if (posts.section == "Kids-section") {
           axios
-            .patch(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts._id}`, {
+            .patch(`http://localhost:5000/api-itemKids/itemkids/${posts._id}`, {
               offers: updatedOffers,
             })
         }
@@ -523,9 +523,9 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
 
  async function del(i,post) {
 
-    if (post.section == "Men-section")  {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
-      else if (post.section == "Women-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
-       else if (post.section == "Kids-section") {await axios.delete(`https://violet-kangaroo-suit.cyclic.app/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+    if (post.section == "Men-section")  {await axios.delete(`http://localhost:5000/api-itemMen/itemmen/${posts[i]._id}`).then(setFilter("")) }
+      else if (post.section == "Women-section") {await axios.delete(`http://localhost:5000/api-itemWomen/itemwomen/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
+       else if (post.section == "Kids-section") {await axios.delete(`http://localhost:5000/api-itemKids/itemkids/${posts[i]._id}`).then(posts.splice(i,1),setFilter(""))}
     
   }
 
@@ -620,20 +620,20 @@ export const ItemsCurrentSell = ({ posts, loading, setFilter }) => {
  
 
  await axios
-  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:localStorage.getItem("logged") })
+  .post(`http://localhost:5000/api-users/users/logged/`, {user:localStorage.getItem("logged") })
   .then((data) => {itemsBought=data.data.user.itemsBought})
 
  await axios
-  .post(`https://violet-kangaroo-suit.cyclic.app/api-users/users/logged/`, {user:post.SellerID })
+  .post(`http://localhost:5000/api-users/users/logged/`, {user:post.SellerID })
   .then((data) => {itemsSoled=data.data.user.itemsSoled} );
   
   itemsBought.push(post)
   itemsSoled.push(post)
 
- await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
+ await axios .patch(`http://localhost:5000/api-users/users/addBought/${localStorage.getItem("logged")}`, { itemsBought: itemsBought})
   .then((data) => {})
 
-   await axios .patch(`https://violet-kangaroo-suit.cyclic.app/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
+   await axios .patch(`http://localhost:5000/api-users/users/addSold/${post.SellerID}`, { itemsSoled: itemsSoled})
   .then((data) => {});
  
 }
