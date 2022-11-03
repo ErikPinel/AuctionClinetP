@@ -12,13 +12,14 @@ function DisplayItemCurrent()
   const[postPerPage,setPostPerPage]=useState(8);
   const[logId,setLogId]=useState();
   const[filter,setFilter]=useState();
+  const[holder,setHolder]=useState();
     
   useEffect(()=>{
     const fetchPostsCurrent= async()=>{
         setloading(true);
         axios.post("https://violet-kangaroo-suit.cyclic.app/api-currentHistory/currentBid",{id:localStorage.getItem("logged")}).then((res) => {
-        res.data?
-        setPosts(res.data):  setPosts([])
+        
+        setPosts(res.data);
         setloading(false)
        
             
@@ -29,6 +30,17 @@ function DisplayItemCurrent()
     fetchPostsCurrent();
 
   },[filter]);
+
+  useEffect(()=>{
+posts?
+setHolder(
+<>
+<ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
+<PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
+</>)
+: console.log("didnt work")
+
+  },[posts]);
 
   const paginate =pageNumber=> setCurrentPage(pageNumber)
 
@@ -42,9 +54,7 @@ function DisplayItemCurrent()
 return(
 
 <div className='display-container-men'>
-
-<ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
-<PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
+{holder}
 
 
 </div>

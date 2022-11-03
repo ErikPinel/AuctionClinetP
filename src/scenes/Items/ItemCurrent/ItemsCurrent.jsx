@@ -162,6 +162,8 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
         if (res.data.status == "logged") setLogged(true);
       }):localStorage.getItem("logged")
     }
+
+  
    window.outerWidth<=600?
     setItems(
       posts.map((posts, index) => (
@@ -337,6 +339,7 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
     ////
     :
     ////
+   
     setItems(
       posts.map((posts, index) => (
         <>
@@ -482,9 +485,6 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
 
               </div>
             ))
-
-
-
             
           }
            
@@ -492,10 +492,6 @@ export const ItemsCurrent = ({ posts, loading, setFilter }) => {
         </>
       ))
     )
-
-
-
-
 
 
 
