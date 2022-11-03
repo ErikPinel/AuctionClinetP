@@ -13,7 +13,9 @@ function DisplayItemCurrent()
   const[logId,setLogId]=useState();
   const[filter,setFilter]=useState();
   const[holder,setHolder]=useState();
-    
+  const[wait,setWait]=useState(0);  
+
+
   useEffect(()=>{
     const fetchPostsCurrent= async()=>{
         setloading(true);
@@ -21,7 +23,7 @@ function DisplayItemCurrent()
         
         setPosts(res.data);
         setloading(false)
-       
+       setWait(wait+1)
             
             })
     }
@@ -32,7 +34,7 @@ function DisplayItemCurrent()
   },[filter]);
 
   useEffect(()=>{
-posts?
+wait!=0?
 setHolder(
 <>
 <ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
@@ -40,7 +42,7 @@ setHolder(
 </>)
 : console.log("didnt work")
 
-  },[posts]);
+  },[wait]);
 
   const paginate =pageNumber=> setCurrentPage(pageNumber)
 
