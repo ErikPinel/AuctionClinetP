@@ -23,7 +23,7 @@ function DisplayItemCurrent()
         
         setPosts(res.data);
         setloading(false)
-       setWait(wait+1)
+       localStorage.getItem("check")
             
             })
     }
@@ -33,16 +33,16 @@ function DisplayItemCurrent()
 
   },[filter]);
 
-  useEffect(()=>{
-wait!=0?
-setHolder(
-<>
-<ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
-<PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
-</>)
-: console.log("didnt work")
+//   useEffect(()=>{
+// wait!=0?
+// setHolder(
+// <>
+// <ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
+// <PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
+// </>)
+// : console.log("didnt work")
 
-  },[wait]);
+//   },[wait]);
 
   const paginate =pageNumber=> setCurrentPage(pageNumber)
 
@@ -56,7 +56,8 @@ setHolder(
 return(
 
 <div className='display-container-men'>
-{holder}
+<ItemsCurrent posts={currentPost} loading={loading} setFilter={setFilter} filter={filter}></ItemsCurrent>
+<PaginationPage paginate={paginate} postPerPage={postPerPage} totalPosts={posts.length} ></PaginationPage>
 
 
 </div>

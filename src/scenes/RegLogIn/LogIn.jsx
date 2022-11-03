@@ -102,7 +102,7 @@ function sets(email,password)
 
   return (
     <Box m="20px">
-      <Header title="LOG IN" />
+      <Header title="LOG IN2" />
 
       <Formik
 
