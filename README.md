@@ -38,7 +38,7 @@ currently selling items
 Clothes recommended specificialy for you,
 picked using our amazing algorithm!
 
-<p align="center"><img src="./ImgsForReadMe/Reccomendations-screenshot.png" width="300" /></p>
+<p align="center"><img src="./selling.PNG" width="300" /></p>
 
 ## Technologies:
 
