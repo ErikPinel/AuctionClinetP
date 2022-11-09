@@ -1,12 +1,12 @@
-# Goolo 
+# Auction.co.il 
 
-Goolo is a swiper, which learns what you like and shows you exactly the clothes you like, all in one place and with
-an interactive left/right swipe.
-With a potential affiliation business model :) 
+auction.co.il is an auction platform that connects sellers and buyers
+(contact info sent to both seller and winning bidder via email).
+On this platform, you can also see relevant statistics such as projected revenue,
+money spent on items, and the number of items sold and bought.
 
 ## Table Of Contents
-- [Goolo](#Goolo)
-  * [Why was Goolo made and why you should use it](#Why-was-Goolo-made-and-why-you-should-use-it)
+- [Auction.co.il](#Auction.co.il)
   * [Running the project](#running-the-project)
   * [Screenshots](#screenshots)
     + [Goolo Swiper](#Goolo-Swiper)
@@ -15,18 +15,8 @@ With a potential affiliation business model :)
     + [Client-Side](#client-side)
     + [Server-Side](#server-side)
   * [Whats Next](#whats-next)
-  * [Be a contribute](#be-a-contribute)
+ 
   
-## Why was Goolo made and why you should use it
-
-1. I understood the world of not being able to 
-   choose clothes is not my own concern.
-2. Goolo helps me and I hope others to ease the pain
-   of looking for the right clothes!
-3. Are you a clothing shop?
-   uncustomized buying experience 
-   makes customers to bounce between websites in a chase after clothes they like, which leads to less sales.
-   Feel free to use this open source code!
 ## Running the project
 
 1. Clone the repo.
@@ -43,8 +33,9 @@ With a potential affiliation business model :)
 An interactive swiper, you like it, you swipe it.
 leave the rest to us :)
 
-<p align="center"><img src="./ImgsForReadMe/Swiper-screenshot.png" width="300" /></p>
+<p align="center"><img src="./selling" width="300" /></p>
 
+<p align="center"><img src="./selling" width="300" /></p>
 
 ### Goolo Recommendations
 Clothes recommended specificialy for you,
