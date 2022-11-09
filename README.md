@@ -9,8 +9,8 @@ money spent on items, and the number of items sold and bought.
 - [Auction.co.il](#Auction.co.il)
   * [Running the project](#running-the-project)
   * [Screenshots](#screenshots)
-    + [Goolo Swiper](#Goolo-Swiper)
-    + [Goolo Recommendations](#Goolo-Recommendations)
+    + [auction section](#auction section)
+    + [personal statistics](#personal statistics)
   * [Technologies](#technologies)
     + [Client-Side](#client-side)
     + [Server-Side](#server-side)
@@ -29,15 +29,12 @@ money spent on items, and the number of items sold and bought.
 
 ## Screenshots
 
-### Goolo Swiper
-An interactive swiper, you like it, you swipe it.
-leave the rest to us :)
+### auction section
+currently selling items
 
 <p align="center"><img src="./selling" width="300" /></p>
 
-<p align="center"><img src="./selling" width="300" /></p>
-
-### Goolo Recommendations
+### personal statistics
 Clothes recommended specificialy for you,
 picked using our amazing algorithm!
 
@@ -47,24 +44,23 @@ picked using our amazing algorithm!
 
 ### Client-side:
 * React.JS
-* Mobx
-* Sequelize
+* mui
+
+
 
 ### Server-side:
 * Node.JS
 * Express
-* SQL
+* mongoDB
 
 ## What's next:
-1. improve swiper page by sending new clothes every 30 swipes.
-2. Improve algorithm for recommendations
+1. Move end of auction handling to server-side .
+2. Add more sections and sub sections.
 3. add more parameters for recommendation. 
 3. Adding affiliation to the app (because why not :))
 4. Buy clothes the way its meant to be. 
 
-## Be a contribute:
 
-<a href="/CONTRIBUTION.md">Contribution Readme</a>
 
 
 
