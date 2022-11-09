@@ -31,14 +31,13 @@ money spent on items, and the number of items sold and bought.
 
 ### auction section
 currently selling items
-
-<p align="center"><img src="./selling" width="300" /></p>
+<p align="center"><img src="./selling.PNG" height="400" width="600" /></p>
 
 ### personal statistics
-Clothes recommended specificialy for you,
-picked using our amazing algorithm!
+DashBoard
+<p align="center"><img src="./selling" width="300" /></p>
 
-<p align="center"><img src="./selling.PNG" height="400" width="600" /></p>
+
 
 ## Technologies:
 
